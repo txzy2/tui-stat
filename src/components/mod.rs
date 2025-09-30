@@ -152,28 +152,32 @@ mod tests {
     #[test]
     fn test_generate_chunks_valid_constraints() {
         let test_rect = Rect::new(0, 0, 100, 100);
-        
+
         let result = generate_chunks(GenChunksParams {
             areas: vec![test_rect],
             constraints: vec![50, 50],
             direction: Direction::Horizontal,
         });
-        
+
         assert!(result.is_ok(), "Valid constraints should succeed");
         let chunks = result.unwrap();
-        assert_eq!(chunks.len(), 2, "Should generate 2 chunks for 2 constraints");
+        assert_eq!(
+            chunks.len(),
+            2,
+            "Should generate 2 chunks for 2 constraints"
+        );
     }
 
     #[test]
     fn test_generate_chunks_invalid_constraints() {
         let test_rect = Rect::new(0, 0, 100, 100);
-        
+
         let result = generate_chunks(GenChunksParams {
             areas: vec![test_rect],
             constraints: vec![50, 30], // Сумма != 100
             direction: Direction::Horizontal,
         });
-        
+
         assert!(result.is_err(), "Invalid constraints should fail");
         assert_eq!(result.unwrap_err(), "Constraints must sum to 100");
     }
@@ -181,29 +185,33 @@ mod tests {
     #[test]
     fn test_generate_chunks_sum_exactly_100() {
         let test_rect = Rect::new(0, 0, 100, 100);
-        
+
         let result = generate_chunks(GenChunksParams {
             areas: vec![test_rect],
             constraints: vec![33, 33, 34], // Сумма = 100
             direction: Direction::Vertical,
         });
-        
+
         assert!(result.is_ok(), "Constraints summing to 100 should succeed");
         let chunks = result.unwrap();
-        assert_eq!(chunks.len(), 3, "Should generate 3 chunks for 3 constraints");
+        assert_eq!(
+            chunks.len(),
+            3,
+            "Should generate 3 chunks for 3 constraints"
+        );
     }
 
     #[test]
     fn test_generate_chunks_multiple_areas() {
         let rect1 = Rect::new(0, 0, 50, 50);
         let rect2 = Rect::new(50, 50, 50, 50);
-        
+
         let result = generate_chunks(GenChunksParams {
             areas: vec![rect1, rect2],
             constraints: vec![60, 40],
             direction: Direction::Horizontal,
         });
-        
+
         assert!(result.is_ok());
         let chunks = result.unwrap();
         // 2 области * 2 ограничения = 4 chunks
@@ -213,22 +221,28 @@ mod tests {
     #[test]
     fn test_center_rect_dimensions() {
         let container = Rect::new(0, 0, 100, 100);
-        
+
         let centered = center_rect(50, 50, container);
-        
+
         // Центрированный rect должен быть примерно в центре
         assert!(centered.x > 0, "X should be offset from left");
         assert!(centered.y > 0, "Y should be offset from top");
-        assert!(centered.width <= 50, "Width should be at most 50% of container");
-        assert!(centered.height <= 50, "Height should be at most 50% of container");
+        assert!(
+            centered.width <= 50,
+            "Width should be at most 50% of container"
+        );
+        assert!(
+            centered.height <= 50,
+            "Height should be at most 50% of container"
+        );
     }
 
     #[test]
     fn test_center_rect_small_percentage() {
         let container = Rect::new(0, 0, 200, 200);
-        
+
         let centered = center_rect(20, 20, container);
-        
+
         // Маленький процент должен давать маленький rect с большими отступами
         assert!(centered.width < container.width / 2);
         assert!(centered.height < container.height / 2);

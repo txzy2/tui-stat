@@ -1,9 +1,9 @@
 use chrono::{DateTime, Local};
 use ratatui::{
-    Frame,
     style::{Color, Style, Stylize},
     text::Line,
     widgets::{Block, Borders, Paragraph},
+    Frame,
 };
 
 use crate::app::App;

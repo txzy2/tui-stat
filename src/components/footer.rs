@@ -1,8 +1,8 @@
 use ratatui::{
-    Frame,
     style::{Color, Style, Stylize},
     text::Line,
     widgets::{Block, Borders, Paragraph},
+    Frame,
 };
 
 pub fn render_footer(frame: &mut Frame, area: ratatui::layout::Rect) {

@@ -62,13 +62,13 @@ mod tests {
     fn test_bytes_to_gb_conversion() {
         // 1 GB = 1073741824 bytes
         assert_eq!(bytes_to_gb(1073741824), 1.0);
-        
+
         // 2 GB
         assert_eq!(bytes_to_gb(2147483648), 2.0);
-        
+
         // 0.5 GB
         assert_eq!(bytes_to_gb(536870912), 0.5);
-        
+
         // 0 bytes
         assert_eq!(bytes_to_gb(0), 0.0);
     }
@@ -77,35 +77,48 @@ mod tests {
     fn test_ram_data_structure() {
         let mut ram = Ram::new();
         let data = ram.get_ram_info();
-        
+
         // Проверяем, что значения находятся в разумных пределах
         assert!(data.total_memory > 0.0, "Total memory should be positive");
-        assert!(data.used_memory >= 0.0, "Used memory should be non-negative");
-        assert!(data.available_memory >= 0.0, "Available memory should be non-negative");
-        assert!(data.usage_memory >= 0.0 && data.usage_memory <= 100.0, 
-                "Usage percentage should be between 0 and 100, got {}", data.usage_memory);
+        assert!(
+            data.used_memory >= 0.0,
+            "Used memory should be non-negative"
+        );
+        assert!(
+            data.available_memory >= 0.0,
+            "Available memory should be non-negative"
+        );
+        assert!(
+            data.usage_memory >= 0.0 && data.usage_memory <= 100.0,
+            "Usage percentage should be between 0 and 100, got {}",
+            data.usage_memory
+        );
     }
 
     #[test]
     fn test_ram_usage_calculation() {
         let mut ram = Ram::new();
         let data = ram.get_ram_info();
-        
+
         // Проверяем формулу: used + available должно примерно равняться total
         let sum = data.used_memory + data.available_memory;
         let diff = (sum - data.total_memory).abs();
-        
+
         // Допускаем небольшую погрешность (например, 0.1 GB)
-        assert!(diff < 0.1, 
-                "Sum of used ({}) and available ({}) should approximately equal total ({})", 
-                data.used_memory, data.available_memory, data.total_memory);
+        assert!(
+            diff < 0.1,
+            "Sum of used ({}) and available ({}) should approximately equal total ({})",
+            data.used_memory,
+            data.available_memory,
+            data.total_memory
+        );
     }
 
     #[test]
     fn test_ram_default() {
         let ram1 = Ram::default();
         let ram2 = Ram::new();
-        
+
         // Оба способа создания должны работать
         assert!(format!("{:?}", ram1).contains("Ram"));
         assert!(format!("{:?}", ram2).contains("Ram"));

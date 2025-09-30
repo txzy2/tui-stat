@@ -308,7 +308,7 @@ mod tests {
         };
 
         let text = App::format_ram_text(&data);
-        
+
         // При usage > 80% используемая память должна быть красной
         // Проверяем что текст содержит данные
         assert!(!text.lines.is_empty(), "Text should not be empty");
@@ -341,7 +341,7 @@ mod tests {
         };
 
         let text = App::format_ram_text(&data);
-        
+
         // Не должно паниковать при нулевых значениях
         assert!(!text.lines.is_empty());
     }
@@ -361,7 +361,10 @@ mod tests {
         // Проверяем наличие меток
         assert!(rendered.contains("Total"), "Should contain 'Total' label");
         assert!(rendered.contains("Used"), "Should contain 'Used' label");
-        assert!(rendered.contains("Available"), "Should contain 'Available' label");
+        assert!(
+            rendered.contains("Available"),
+            "Should contain 'Available' label"
+        );
         assert!(rendered.contains("Usage"), "Should contain 'Usage' label");
     }
 }

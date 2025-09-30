@@ -1,4 +1,4 @@
-use tui_stat::types::{RamData, GeoData, WeatherInfo};
+use tui_stat::types::{GeoData, RamData, WeatherInfo};
 
 #[test]
 fn test_ram_data_structure() {
@@ -8,7 +8,7 @@ fn test_ram_data_structure() {
         available_memory: 8.0,
         usage_memory: 50.0,
     };
-    
+
     assert_eq!(ram_data.total_memory, 16.0);
     assert_eq!(ram_data.used_memory, 8.0);
     assert_eq!(ram_data.available_memory, 8.0);
@@ -23,9 +23,9 @@ fn test_ram_data_clone() {
         available_memory: 16.0,
         usage_memory: 50.0,
     };
-    
+
     let ram_data2 = ram_data1.clone();
-    
+
     assert_eq!(ram_data1.total_memory, ram_data2.total_memory);
     assert_eq!(ram_data1.used_memory, ram_data2.used_memory);
 }
@@ -36,7 +36,7 @@ fn test_geo_data_structure() {
         latitude: 55.7558,
         longitude: 37.6173,
     };
-    
+
     assert_eq!(geo_data.latitude, 55.7558);
     assert_eq!(geo_data.longitude, 37.6173);
 }
@@ -47,7 +47,7 @@ fn test_weather_info_structure() {
         name: "Moscow".to_string(),
         temp_c: 15.0,
     };
-    
+
     assert_eq!(weather.name, "Moscow");
     assert_eq!(weather.temp_c, 15.0);
 }
@@ -58,9 +58,9 @@ fn test_weather_info_clone() {
         name: "London".to_string(),
         temp_c: 12.5,
     };
-    
+
     let weather2 = weather1.clone();
-    
+
     assert_eq!(weather1.name, weather2.name);
     assert_eq!(weather1.temp_c, weather2.temp_c);
 }
