@@ -1,0 +1,22 @@
+[package]
+name = "tui_stat"
+version = "0.1.0"
+description = "An example generated using the simple template"
+authors = ["txzy2 <txzy2@yandex.ru>"]
+license = "MIT"
+edition = "2021"
+
+[dependencies]
+crossterm = "0.28.1"
+ratatui = "0.29.0"
+color-eyre = "0.6.3"
+sysinfo = "0.37.1"
+tracing-error = "0.2.1"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
+directories = "6.0.0" 
+chrono = "0.4.42"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+dotenvy = "0.15.7"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }

@@ -1,0 +1,467 @@
+[2025-09-29 18:20:16] :INFO:Application started
+[2025-09-29 18:20:17] :INFO:get_ram_info init
+[2025-09-29 18:20:17] :INFO:left_chunks: [
+    Rect {
+        x: 0,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 0,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 136,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 136,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 0,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 0,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+    Rect {
+        x: 136,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 136,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+]
+[2025-09-29 18:20:18] :INFO:Quit requested by user
+[2025-09-29 18:20:18] :INFO:Application exited successfully
+[2025-09-29 18:23:22] :INFO:Application started
+[2025-09-29 18:23:22] :INFO:get_ram_info init
+[2025-09-29 18:23:22] :INFO:left_chunks: [
+    Rect {
+        x: 0,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 0,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 136,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 136,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 0,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 0,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+    Rect {
+        x: 136,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 136,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+]
+[2025-09-29 18:23:24] :INFO:Quit requested by user
+[2025-09-29 18:23:24] :INFO:Application exited successfully
+[2025-09-29 18:23:24] :INFO:Interface { name: "lo", addr: V4(Ifv4Addr { ip: 127.0.0.1, netmask: 255.0.0.0, broadcast: None }) }
+[2025-09-29 18:23:24] :INFO:Interface { name: "wlan0", addr: V4(Ifv4Addr { ip: 192.168.3.107, netmask: 255.255.255.0, broadcast: Some(192.168.3.255) }) }
+[2025-09-29 18:23:24] :INFO:Interface { name: "docker0", addr: V4(Ifv4Addr { ip: 172.17.0.1, netmask: 255.255.0.0, broadcast: Some(172.17.255.255) }) }
+[2025-09-29 18:23:24] :INFO:Interface { name: "br-40d184eb0a9f", addr: V4(Ifv4Addr { ip: 172.18.0.1, netmask: 255.255.0.0, broadcast: Some(172.18.255.255) }) }
+[2025-09-29 18:23:24] :INFO:Interface { name: "lo", addr: V6(Ifv6Addr { ip: ::1, netmask: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff, broadcast: None }) }
+[2025-09-29 18:26:11] :INFO:Application started
+[2025-09-29 18:26:11] :INFO:get_ram_info init
+[2025-09-29 18:26:11] :INFO:left_chunks: [
+    Rect {
+        x: 0,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 0,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 136,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 136,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 0,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 0,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+    Rect {
+        x: 136,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 136,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+]
+[2025-09-29 18:26:14] :INFO:Quit requested by user
+[2025-09-29 18:26:14] :INFO:Application exited successfully
+[2025-09-29 18:26:14] :INFO:IP: 77.40.61.246
+[2025-09-29 18:33:55] :INFO:Application started
+[2025-09-29 18:33:55] :INFO:get_ram_info init
+[2025-09-29 18:33:55] :INFO:IP: 77.40.61.246
+[2025-09-29 18:33:55] :INFO:left_chunks: [
+    Rect {
+        x: 0,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 0,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 136,
+        y: 0,
+        width: 136,
+        height: 65,
+    },
+    Rect {
+        x: 136,
+        y: 65,
+        width: 136,
+        height: 2,
+    },
+    Rect {
+        x: 0,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 0,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+    Rect {
+        x: 136,
+        y: 67,
+        width: 136,
+        height: 1,
+    },
+    Rect {
+        x: 136,
+        y: 68,
+        width: 136,
+        height: 0,
+    },
+]
+[2025-09-29 18:33:56] :INFO:Quit requested by user
+[2025-09-29 18:33:56] :INFO:Application exited successfully
+[2025-09-29 18:43:49] :INFO:Application started
+[2025-09-29 18:43:50] :INFO:get_ram_info init
+[2025-09-29 18:43:50] :INFO:IP: 77.40.61.246
+[2025-09-29 18:43:52] :INFO:Quit requested by user
+[2025-09-29 18:43:52] :INFO:Application exited successfully
+[2025-09-29 19:11:49] :INFO:Application started
+[2025-09-29 19:11:49] :INFO:get_ram_info init
+[2025-09-29 19:11:50] :INFO:IP: 77.40.61.246
+[2025-09-29 19:11:50] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 19:11:54] :INFO:Quit requested by user
+[2025-09-29 19:11:54] :INFO:Application exited successfully
+[2025-09-29 19:25:50] :INFO:Application started
+[2025-09-29 19:25:50] :INFO:get_ram_info init
+[2025-09-29 19:25:51] :INFO:IP: 77.40.61.246
+[2025-09-29 19:25:51] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 19:25:52] :INFO:Weather: Yoshkar-Ola: 276.31°C
+[2025-09-29 19:25:54] :INFO:Quit requested by user
+[2025-09-29 19:25:54] :INFO:Application exited successfully
+[2025-09-29 20:13:14] :INFO:Application started
+[2025-09-29 20:13:14] :INFO:get_ram_info init
+[2025-09-29 20:13:14] :INFO:IP: 77.40.61.246
+[2025-09-29 20:13:15] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 20:13:15] :INFO:Weather: Yoshkar-Ola: 275.74°C
+[2025-09-29 20:13:17] :INFO:Quit requested by user
+[2025-09-29 20:13:17] :INFO:Application exited successfully
+[2025-09-29 20:14:44] :INFO:Application started
+[2025-09-29 20:14:44] :INFO:get_ram_info init
+[2025-09-29 20:14:44] :INFO:IP: 77.40.61.246
+[2025-09-29 20:14:45] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 20:14:45] :INFO:Weather: Yoshkar-Ola: 2.590000000000032°C
+[2025-09-29 20:14:48] :INFO:Quit requested by user
+[2025-09-29 20:14:48] :INFO:Application exited successfully
+[2025-09-29 20:17:53] :INFO:Application started
+[2025-09-29 20:17:53] :INFO:get_ram_info init
+[2025-09-29 20:17:53] :INFO:IP: 77.40.61.246
+[2025-09-29 20:17:54] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 20:17:54] :INFO:Weather: Yo
+[2025-09-29 20:17:55] :INFO:Quit requested by user
+[2025-09-29 20:17:55] :INFO:Application exited successfully
+[2025-09-29 20:18:14] :INFO:Application started
+[2025-09-29 20:18:14] :INFO:get_ram_info init
+[2025-09-29 20:18:14] :INFO:IP: 77.40.61.246
+[2025-09-29 20:18:15] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 20:18:15] :INFO:Weather: Yo
+[2025-09-29 20:24:02] :INFO:Application started
+[2025-09-29 20:24:02] :INFO:get_ram_info init
+[2025-09-29 20:24:02] :INFO:IP: 77.40.61.246
+[2025-09-29 20:24:03] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 20:24:03] :INFO:Weather: Yoshkar-Ola (2.59°C)
+[2025-09-29 20:25:04] :INFO:Quit requested by user
+[2025-09-29 20:25:04] :INFO:Application exited successfully
+[2025-09-29 20:25:06] :INFO:Application started
+[2025-09-29 20:25:06] :INFO:get_ram_info init
+[2025-09-29 20:25:06] :INFO:IP: 77.40.61.246
+[2025-09-29 20:25:07] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 20:25:07] :INFO:Weather: Yoshkar-Ola (3.00°C)
+[2025-09-29 20:28:08] :INFO:Quit requested by user
+[2025-09-29 20:28:08] :INFO:Application exited successfully
+[2025-09-29 20:28:10] :INFO:Application started
+[2025-09-29 20:28:11] :INFO:get_ram_info init
+[2025-09-29 20:28:11] :INFO:IP: 77.40.61.246
+[2025-09-29 20:28:11] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 20:28:12] :INFO:Weather: Yoshkar-Ola (3°C)
+[2025-09-29 20:31:35] :INFO:Quit requested by user
+[2025-09-29 20:31:35] :INFO:Application exited successfully
+[2025-09-29 21:26:43] :INFO:Application started
+[2025-09-29 21:26:43] :INFO:get_ram_info init
+[2025-09-29 21:26:44] :INFO:IP: 77.40.61.246
+[2025-09-29 21:26:44] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 21:26:45] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 21:29:59] :INFO:Application started
+[2025-09-29 21:29:59] :INFO:get_ram_info init
+[2025-09-29 21:30:00] :INFO:IP: 77.40.61.246
+[2025-09-29 21:30:00] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 21:30:00] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 21:37:34] :INFO:Application started
+[2025-09-29 21:37:34] :INFO:get_ram_info init
+[2025-09-29 21:37:35] :INFO:IP: 77.40.61.246
+[2025-09-29 21:37:36] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 21:37:36] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 21:37:44] :INFO:Quit requested by user
+[2025-09-29 21:37:44] :INFO:Application exited successfully
+[2025-09-29 21:43:35] :INFO:Application started
+[2025-09-29 21:43:36] :INFO:get_ram_info init
+[2025-09-29 21:43:37] :INFO:IP: 77.40.61.246
+[2025-09-29 21:43:37] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 21:43:38] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 21:50:48] :INFO:Quit requested by user
+[2025-09-29 21:50:48] :INFO:Application exited successfully
+[2025-09-29 22:01:10] :INFO:Application started
+[2025-09-29 22:01:10] :INFO:get_ram_info init
+[2025-09-29 22:01:11] :INFO:IP: 77.40.61.246
+[2025-09-29 22:01:11] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 22:01:12] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 22:01:16] :INFO:Quit requested by user
+[2025-09-29 22:01:16] :INFO:Application exited successfully
+[2025-09-29 22:03:33] :INFO:Application started
+[2025-09-29 22:03:33] :INFO:get_ram_info init
+[2025-09-29 22:03:34] :INFO:IP: 77.40.61.246
+[2025-09-29 22:03:34] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 22:03:35] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 22:06:37] :INFO:Quit requested by user
+[2025-09-29 22:06:37] :INFO:Application exited successfully
+[2025-09-29 22:06:38] :INFO:Application started
+[2025-09-29 22:06:38] :INFO:get_ram_info init
+[2025-09-29 22:06:39] :INFO:IP: 77.40.61.246
+[2025-09-29 22:06:39] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 22:06:40] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 22:06:46] :INFO:Quit requested by user
+[2025-09-29 22:06:46] :INFO:Application exited successfully
+[2025-09-29 22:15:02] :INFO:Application started
+[2025-09-29 22:15:02] :INFO:get_ram_info init
+[2025-09-29 22:15:03] :INFO:IP: 77.40.61.246
+[2025-09-29 22:15:04] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 22:15:05] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 22:15:08] :INFO:Quit requested by user
+[2025-09-29 22:15:08] :INFO:Application exited successfully
+[2025-09-29 22:24:36] :INFO:Application started
+[2025-09-29 22:24:36] :INFO:get_ram_info init
+[2025-09-29 22:24:37] :ERROR:error sending request for url (https://api.ipify.org/)
+[2025-09-29 22:25:39] :INFO:Quit requested by user
+[2025-09-29 22:25:39] :INFO:Application exited successfully
+[2025-09-29 22:25:40] :INFO:Application started
+[2025-09-29 22:25:40] :INFO:get_ram_info init
+[2025-09-29 22:25:41] :INFO:IP: 77.40.61.246
+[2025-09-29 22:25:42] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 22:25:42] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 22:27:05] :INFO:Quit requested by user
+[2025-09-29 22:27:05] :INFO:Application exited successfully
+[2025-09-29 22:27:09] :INFO:Application started
+[2025-09-29 22:27:09] :INFO:get_ram_info init
+[2025-09-29 22:27:10] :ERROR:error sending request for url (https://api.ipify.org/)
+[2025-09-29 22:27:53] :INFO:Quit requested by user
+[2025-09-29 22:27:53] :INFO:Application exited successfully
+[2025-09-29 22:27:57] :INFO:Application started
+[2025-09-29 22:27:57] :INFO:get_ram_info init
+[2025-09-29 22:27:58] :INFO:IP: 77.40.61.246
+[2025-09-29 22:27:58] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 22:27:59] :INFO:Weather: Yoshkar-Ola (2°C)
+[2025-09-29 22:28:08] :INFO:Quit requested by user
+[2025-09-29 22:28:08] :INFO:Application exited successfully
+[2025-09-29 22:39:28] :INFO:Application started
+[2025-09-29 22:39:28] :INFO:get_ram_info init
+[2025-09-29 22:39:29] :INFO:IP: 77.40.61.246
+[2025-09-29 22:39:29] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 22:39:29] :INFO:Weather: Yoshkar-Ola (1°C)
+[2025-09-29 22:39:49] :INFO:Quit requested by user
+[2025-09-29 22:39:49] :INFO:Application exited successfully
+[2025-09-29 23:01:02] :INFO:Application started
+[2025-09-29 23:01:02] :INFO:get_ram_info init
+[2025-09-29 23:01:03] :INFO:IP: 77.40.61.246
+[2025-09-29 23:01:04] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 23:01:04] :INFO:Weather: Yoshkar-Ola (1°C)
+[2025-09-29 23:01:07] :INFO:Quit requested by user
+[2025-09-29 23:01:07] :INFO:Application exited successfully
+[2025-09-29 23:09:59] :INFO:Application started
+[2025-09-29 23:09:59] :INFO:get_ram_info init
+[2025-09-29 23:10:00] :INFO:IP: 77.40.61.246
+[2025-09-29 23:10:00] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 23:10:01] :INFO:Weather: Yoshkar-Ola (1°C)
+[2025-09-29 23:10:03] :INFO:Quit requested by user
+[2025-09-29 23:10:03] :INFO:Application exited successfully
+[2025-09-29 23:45:29] :INFO:Application started
+[2025-09-29 23:45:29] :INFO:get_ram_info init
+[2025-09-29 23:45:30] :INFO:IP: 77.40.61.246
+[2025-09-29 23:45:31] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-29 23:45:32] :INFO:Weather: Yoshkar-Ola (1°C)
+[2025-09-29 23:45:35] :INFO:Quit requested by user
+[2025-09-29 23:45:35] :INFO:Application exited successfully
+[2025-09-30 00:22:24] :INFO:Application started
+[2025-09-30 00:22:24] :INFO:get_ram_info init
+[2025-09-30 00:22:25] :INFO:IP: 77.40.61.246
+[2025-09-30 00:22:25] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 00:22:26] :INFO:Weather: Yoshkar-Ola (1°C)
+[2025-09-30 00:22:27] :INFO:Quit requested by user
+[2025-09-30 00:22:27] :INFO:Application exited successfully
+[2025-09-30 01:38:41] :INFO:Application started
+[2025-09-30 01:38:41] :INFO:get_ram_info init
+[2025-09-30 01:38:42] :INFO:IP: 77.40.61.246
+[2025-09-30 01:38:43] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 01:38:43] :INFO:Weather: Yoshkar-Ola (0°C)
+[2025-09-30 01:38:52] :INFO:Quit requested by user
+[2025-09-30 01:38:52] :INFO:Application exited successfully
+[2025-09-30 01:43:46] :INFO:Application started
+[2025-09-30 01:43:46] :INFO:get_ram_info init
+[2025-09-30 01:43:47] :INFO:IP: 77.40.61.246
+[2025-09-30 01:43:47] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 01:43:48] :INFO:Weather: Yoshkar-Ola (0°C)
+[2025-09-30 01:44:55] :INFO:Quit requested by user
+[2025-09-30 01:44:55] :INFO:Application exited successfully
+[2025-09-30 01:59:06] :INFO:Application started
+[2025-09-30 01:59:06] :INFO:get_ram_info init
+[2025-09-30 01:59:07] :INFO:IP: 77.40.61.246
+[2025-09-30 01:59:08] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 01:59:08] :INFO:Weather: Yoshkar-Ola (0°C)
+[2025-09-30 01:59:10] :INFO:Quit requested by user
+[2025-09-30 01:59:10] :INFO:Application exited successfully
+[2025-09-30 10:58:02] :INFO:Application started
+[2025-09-30 10:58:02] :INFO:get_ram_info init
+[2025-09-30 10:58:03] :INFO:IP: 77.40.61.246
+[2025-09-30 10:58:04] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 10:58:04] :INFO:Weather: Yoshkar-Ola (9°C)
+[2025-09-30 10:58:10] :INFO:Quit requested by user
+[2025-09-30 10:58:10] :INFO:Application exited successfully
+[2025-09-30 11:04:51] :INFO:Application started
+[2025-09-30 11:04:51] :INFO:get_ram_info init
+[2025-09-30 11:04:52] :INFO:IP: 77.40.61.246
+[2025-09-30 11:04:52] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 11:04:53] :INFO:Weather: Yoshkar-Ola (9°C)
+[2025-09-30 11:13:12] :INFO:Quit requested by user
+[2025-09-30 11:13:12] :INFO:Application exited successfully
+[2025-09-30 11:56:16] INFO: Application started
+[2025-09-30 11:56:16] INFO: get_ram_info init
+[2025-09-30 11:56:17] INFO: IP: 77.40.61.246
+[2025-09-30 11:56:17] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 11:56:18] INFO: Weather: Yoshkar-Ola (10°C)
+[2025-09-30 11:56:20] INFO: Quit requested by user
+[2025-09-30 11:56:20] INFO: Application exited successfully
+[2025-09-30 11:57:34] INFO: Application started
+[2025-09-30 11:57:34] INFO: refresh_memory init
+System { global CPU usage: 10.778221, load average: LoadAvg { one: 1.86, five: 1.97, fifteen: 2.37 }, total memory: 8095088640, free memory: 318062592, total swap: 4047499264, free swap: 221184, nb CPUs: 8, nb processes: 1649 }
+[2025-09-30 11:57:34] INFO: get_ram_info init
+[2025-09-30 11:57:35] INFO: IP: 77.40.61.246
+[2025-09-30 11:57:36] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 11:57:36] INFO: Weather: Yoshkar-Ola (10°C)
+[2025-09-30 12:00:03] INFO: Quit requested by user
+[2025-09-30 12:00:03] INFO: Application exited successfully
+[2025-09-30 12:00:04] INFO: Application started
+[2025-09-30 12:00:05] INFO: refresh_memory init
+System { global CPU usage: 14.970061, load average: LoadAvg { one: 1.83, five: 1.92, fifteen: 2.28 }, total memory: 8095088640, free memory: 408952832, total swap: 4047499264, free swap: 77824, nb CPUs: 8, nb processes: 1722 }
+[2025-09-30 12:00:05] INFO: get_ram_info init
+[2025-09-30 12:00:06] INFO: IP: 77.40.61.246
+[2025-09-30 12:00:08] ERROR: error decoding response body
+[2025-09-30 12:00:15] INFO: Quit requested by user
+[2025-09-30 12:00:15] INFO: Application exited successfully
+[2025-09-30 12:00:16] INFO: Application started
+[2025-09-30 12:00:16] INFO: refresh_memory init
+System { global CPU usage: 10.742087, load average: LoadAvg { one: 1.77, five: 1.9, fifteen: 2.27 }, total memory: 8095088640, free memory: 356696064, total swap: 4047499264, free swap: 200704, nb CPUs: 8, nb processes: 1705 }
+[2025-09-30 12:00:16] INFO: get_ram_info init
+[2025-09-30 12:00:17] INFO: IP: 77.40.61.246
+[2025-09-30 12:00:18] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 12:00:18] INFO: Weather: Yoshkar-Ola (10°C)
+[2025-09-30 12:00:22] INFO: Quit requested by user
+[2025-09-30 12:00:22] INFO: Application exited successfully
