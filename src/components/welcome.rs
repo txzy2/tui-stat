@@ -39,6 +39,8 @@ pub fn render_welcome(frame: &mut Frame, area: ratatui::layout::Rect, app: &App)
                 Style::default().fg(value_color),
             ),
             Span::styled("]", Style::default().fg(label_color)),
+            Span::styled(" Move: ", Style::default().fg(label_color)),
+            Span::styled("k/j (Up/Down)", Style::default().fg(value_color)),
         ])
     } else {
         let dots = get_loading_animation(app.animation_frame);
@@ -53,6 +55,8 @@ pub fn render_welcome(frame: &mut Frame, area: ratatui::layout::Rect, app: &App)
             Span::styled("Loading ", Style::default().fg(value_color)),
             Span::styled(dots, Style::default().fg(value_color)),
             Span::styled("]", Style::default().fg(label_color)),
+            Span::styled(" Move: ", Style::default().fg(label_color)),
+            Span::styled("k/j (Up/Down)", Style::default().fg(value_color)),
         ])
     };
 

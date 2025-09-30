@@ -30,6 +30,16 @@ impl KeyHandler {
                 | (KeyModifiers::CONTROL, KeyCode::Char('c') | KeyCode::Char('C')) => {
                     app.show_quit_modal = true;
                 }
+                // Обработка клавиш для перемещения по списку
+                (_, KeyCode::Char('k')) => {
+                    app.list_state.previous();
+                }
+                (_, KeyCode::Char('j')) => {
+                    app.list_state.next();
+                }
+                (_, KeyCode::Enter) => {
+                    app.show_item = !app.show_item;
+                }
                 _ => {}
             }
         }

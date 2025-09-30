@@ -9,7 +9,7 @@ use ratatui::{
 use crate::types::SystemData;
 
 pub fn render_memory_info(frame: &mut Frame, area: Rect, text: &Text<'_>) {
-    let title = Line::from("Press `Esc`, `Ctrl-C` or `q` to stop running.")
+    let title = Line::from("Press `Ctrl-C` or `q` to stop running.")
         .bold()
         .white()
         .centered();

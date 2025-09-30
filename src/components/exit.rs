@@ -2,14 +2,14 @@ use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout},
     style::{Color, Modifier, Style},
     text::{Line, Span},
-    widgets::{Block, Borders, Clear, Padding, Paragraph},
+    widgets::{Block, Borders, Clear, Paragraph},
     Frame,
 };
 
 use crate::components;
 
 pub fn render_quit_modal(frame: &mut Frame) {
-    let modal_area = components::center_rect(20, 10, frame.area());
+    let modal_area = components::center_rect(30, 12, frame.area());
 
     frame.render_widget(Clear, modal_area);
 
@@ -30,7 +30,6 @@ pub fn render_quit_modal(frame: &mut Frame) {
         .borders(Borders::ALL)
         .border_type(ratatui::widgets::BorderType::Rounded)
         .border_style(Style::default().fg(Color::Cyan))
-        .padding(Padding::uniform(1))
         .style(Style::default().bg(Color::Rgb(30, 30, 40)));
 
     frame.render_widget(modal_block, modal_area);
@@ -38,11 +37,7 @@ pub fn render_quit_modal(frame: &mut Frame) {
     let content_area = Layout::default()
         .direction(Direction::Vertical)
         .margin(2)
-        .constraints([
-            Constraint::Length(2),
-            Constraint::Length(1),
-            Constraint::Length(2),
-        ])
+        .constraints([Constraint::Length(1), Constraint::Length(1)])
         .split(modal_area);
 
     let question = Paragraph::new(vec![Line::from(vec![
@@ -66,5 +61,5 @@ pub fn render_quit_modal(frame: &mut Frame) {
         .style(Style::default().bg(Color::Rgb(30, 30, 40)));
 
     frame.render_widget(question, content_area[0]);
-    frame.render_widget(controls, content_area[2]);
+    frame.render_widget(controls, content_area[1]);
 }

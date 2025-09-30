@@ -14,7 +14,7 @@ use tokio::{
 use crate::{
     components, logger,
     system::{keys_handler, memory::System},
-    types::{GeoData, SystemData, WeatherInfo, WeatherResponse},
+    types::{GeoData, ListState, SystemData, WeatherInfo, WeatherResponse},
 };
 
 enum AsyncUpdate {
@@ -38,6 +38,8 @@ pub struct App {
     runtime: Handle,
     updates_rx: UnboundedReceiver<AsyncUpdate>,
     updates_tx: UnboundedSender<AsyncUpdate>,
+    pub list_state: ListState,
+    pub show_item: bool,
 }
 
 impl fmt::Debug for App {
@@ -75,6 +77,8 @@ impl App {
             runtime,
             updates_rx,
             updates_tx,
+            list_state: ListState::new(),
+            show_item: false,
         }
     }
 

@@ -1,6 +1,7 @@
 mod exit;
-mod main_right;
+pub mod list;
 mod ram;
+mod selected;
 mod welcome;
 
 pub use ram::format_sys_text;
@@ -10,30 +11,35 @@ use ratatui::{
     Frame,
 };
 
-use crate::app::App;
+use crate::{app::App, logger};
 
 pub fn render(frame: &mut Frame, app: &App) {
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Percentage(1),
-            Constraint::Percentage(98),
-            Constraint::Percentage(1),
+            Constraint::Length(1),
+            Constraint::Min(6),
+            Constraint::Length(0),
         ])
         .split(frame.area());
 
     let main_chunks = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([Constraint::Percentage(95), Constraint::Percentage(5)])
+        .constraints([
+            Constraint::Min(3),
+            Constraint::Length(3),
+            Constraint::Length(0),
+        ])
         .split(layout[1]);
 
     let main_chunks_split = Layout::default()
         .direction(Direction::Horizontal)
-        .constraints([Constraint::Percentage(50), Constraint::Percentage(50)])
+        .constraints([Constraint::Min(40), Constraint::Min(40)])
         .split(main_chunks[0]);
 
     welcome::render_welcome(frame, layout[0], app);
-    main_right::render_main_right(frame, main_chunks_split[0]);
+    list::render_list(frame, main_chunks_split[0], &app.list_state);
+    selected::render_select(frame, main_chunks_split[1], &app.list_state);
     ram::render_memory_info(frame, main_chunks[1], &app.sys_text);
 
     if app.show_quit_modal {
