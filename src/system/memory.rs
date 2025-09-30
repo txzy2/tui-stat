@@ -1,28 +1,26 @@
 use crate::{
     logger::{self, log_once},
-    types::RamData,
+    types::{CpuInfo, SystemData},
 };
 
 const BYTES_TO_GB: f64 = 1024.0 * 1024.0 * 1024.0;
 
 #[derive(Debug)]
-pub struct Ram {
+pub struct System {
     system: sysinfo::System,
 }
 
 //TODO: Добавить отправку загрузки CPU
-impl Ram {
+impl System {
     pub fn new() -> Self {
         let mut system = sysinfo::System::new_all();
-        logger::log_once(format!("refresh_memory init\n{:?}", system), |msg| {
-            logger::info(msg)
-        });
+
         system.refresh_memory();
         Self { system }
     }
 
-    pub fn get_ram_info(&mut self) -> RamData {
-        log_once("get_ram_info init", |msg| logger::info(msg));
+    pub fn get_info(&mut self) -> SystemData {
+        log_once("get_info init", |msg| logger::info(msg));
         self.system.refresh_memory();
 
         let total_memory = self.system.total_memory();
@@ -35,16 +33,44 @@ impl Ram {
             0.0
         };
 
-        RamData {
+        let cpu = self.get_cpu_data().unwrap_or_default();
+
+        SystemData {
             total_memory: bytes_to_gb(total_memory),
             used_memory: bytes_to_gb(used_memory),
             available_memory: bytes_to_gb(available_memory),
             usage_memory: usage_percent,
+            cpu,
+        }
+    }
+
+    fn get_cpu_data(&self) -> Result<CpuInfo, String> {
+        logger::log_once(format!("CPU len {}", self.system.cpus().len()), |msg| {
+            logger::info(msg)
+        });
+
+        if let Some(cpu) = self.system.cpus().first() {
+            logger::log_once(
+                format!(
+                    "CPU brand: {}\nCPU frequency: {} MHz",
+                    cpu.brand(),
+                    cpu.frequency()
+                ),
+                |msg| logger::info(msg),
+            );
+
+            Ok(CpuInfo {
+                len: self.system.cpus().len(),
+                frequency: cpu.frequency(),
+                brand: cpu.brand().to_string(),
+            })
+        } else {
+            Err("Cpu information not found".to_string())
         }
     }
 }
 
-impl Default for Ram {
+impl Default for System {
     fn default() -> Self {
         Self::new()
     }
@@ -75,8 +101,8 @@ mod tests {
 
     #[test]
     fn test_ram_data_structure() {
-        let mut ram = Ram::new();
-        let data = ram.get_ram_info();
+        let mut ram = System::new();
+        let data = ram.get_info();
 
         // Проверяем, что значения находятся в разумных пределах
         assert!(data.total_memory > 0.0, "Total memory should be positive");
@@ -97,8 +123,8 @@ mod tests {
 
     #[test]
     fn test_ram_usage_calculation() {
-        let mut ram = Ram::new();
-        let data = ram.get_ram_info();
+        let mut ram = System::new();
+        let data = ram.get_info();
 
         // Проверяем формулу: used + available должно примерно равняться total
         let sum = data.used_memory + data.available_memory;
@@ -116,11 +142,11 @@ mod tests {
 
     #[test]
     fn test_ram_default() {
-        let ram1 = Ram::default();
-        let ram2 = Ram::new();
+        let ram1 = System::default();
+        let ram2 = System::new();
 
         // Оба способа создания должны работать
-        assert!(format!("{:?}", ram1).contains("Ram"));
-        assert!(format!("{:?}", ram2).contains("Ram"));
+        assert!(format!("{:?}", ram1).contains("System"));
+        assert!(format!("{:?}", ram2).contains("System"));
     }
 }

@@ -4,10 +4,7 @@ use std::{
 };
 
 use crossterm::event;
-use ratatui::{
-    style::{Color, Style},
-    text::{Line, Span, Text},
-};
+use ratatui::text::Text;
 use reqwest::Client;
 use tokio::{
     runtime::Handle,
@@ -16,8 +13,8 @@ use tokio::{
 
 use crate::{
     components, logger,
-    system::{keys_handler, memory::Ram},
-    types::{GeoData, RamData, WeatherInfo, WeatherResponse},
+    system::{keys_handler, memory::System},
+    types::{GeoData, SystemData, WeatherInfo, WeatherResponse},
 };
 
 enum AsyncUpdate {
@@ -33,9 +30,10 @@ pub struct App {
     geo_data: Option<GeoData>,
     weather_data: Option<WeatherInfo>,
     pub show_quit_modal: bool,
-    pub ram_data: RamData,
-    pub ram_collector: Ram,
-    pub ram_text: Text<'static>,
+    pub sys_data: SystemData,
+    pub sys_collector: System,
+    pub sys_text: Text<'static>,
+    pub animation_frame: usize,
     client: Client,
     runtime: Handle,
     updates_rx: UnboundedReceiver<AsyncUpdate>,
@@ -50,7 +48,7 @@ impl fmt::Debug for App {
             .field("geo_data", &self.geo_data)
             .field("weather_data", &self.weather_data)
             .field("show_quit_modal", &self.show_quit_modal)
-            .field("ram_data", &self.ram_data)
+            .field("sys_data", &self.sys_data)
             .finish()
     }
 }
@@ -59,9 +57,9 @@ impl App {
     pub fn new(runtime: Handle) -> Self {
         let client = Client::new();
         let (updates_tx, updates_rx) = mpsc::unbounded_channel();
-        let mut ram_collector = Ram::new();
-        let ram_data = ram_collector.get_ram_info();
-        let ram_text = Self::format_ram_text(&ram_data);
+        let mut sys_collector = System::new();
+        let sys_data = sys_collector.get_info();
+        let sys_text = components::format_sys_text(&sys_data);
 
         Self {
             running: true,
@@ -69,9 +67,10 @@ impl App {
             geo_data: None,
             weather_data: None,
             show_quit_modal: false,
-            ram_data,
-            ram_collector,
-            ram_text,
+            sys_data,
+            sys_collector,
+            sys_text,
+            animation_frame: 0,
             client,
             runtime,
             updates_rx,
@@ -91,6 +90,7 @@ impl App {
 
             if last_tick.elapsed() >= tick_rate {
                 self.update_ram_data();
+                self.animation_frame = (self.animation_frame + 1) % 4;
                 last_tick = Instant::now();
             }
 
@@ -154,9 +154,9 @@ impl App {
     }
 
     fn update_ram_data(&mut self) {
-        let updated = self.ram_collector.get_ram_info();
-        self.ram_text = Self::format_ram_text(&updated);
-        self.ram_data = updated;
+        let updated = self.sys_collector.get_info();
+        self.sys_text = components::format_sys_text(&updated);
+        self.sys_data = updated;
     }
 
     fn handle_events(&mut self) -> color_eyre::Result<()> {
@@ -166,48 +166,6 @@ impl App {
 
     pub(crate) fn request_quit(&mut self) {
         self.running = false;
-    }
-
-    fn format_ram_text(data: &RamData) -> Text<'static> {
-        let label_color = Color::LightCyan;
-        let mut spans = Vec::with_capacity(12);
-
-        spans.push(Span::styled("Total: ", Style::default().fg(label_color)));
-        spans.push(Span::styled(
-            format!("{:.2} GB", data.total_memory),
-            Style::default().fg(Color::Yellow),
-        ));
-        spans.push(Span::raw("  "));
-
-        spans.push(Span::styled("Used: ", Style::default().fg(label_color)));
-        let used_color = if data.usage_memory > 80.0 {
-            Color::Red
-        } else {
-            Color::Yellow
-        };
-        spans.push(Span::styled(
-            format!("{:.2} GB", data.used_memory),
-            Style::default().fg(used_color),
-        ));
-        spans.push(Span::raw("  "));
-
-        spans.push(Span::styled(
-            "Available: ",
-            Style::default().fg(label_color),
-        ));
-        spans.push(Span::styled(
-            format!("{:.2} GB", data.available_memory),
-            Style::default().fg(Color::Yellow),
-        ));
-        spans.push(Span::raw("  "));
-
-        spans.push(Span::styled("Usage: ", Style::default().fg(label_color)));
-        spans.push(Span::styled(
-            format!("{:.1}%", data.usage_memory),
-            Style::default().fg(Color::Yellow),
-        ));
-
-        Text::from(Line::from(spans))
     }
 }
 
@@ -274,97 +232,4 @@ async fn fetch_weather(
         name: resp.name,
         temp_c,
     })
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_format_ram_text_normal_usage() {
-        let data = RamData {
-            total_memory: 16.0,
-            used_memory: 8.0,
-            available_memory: 8.0,
-            usage_memory: 50.0,
-        };
-
-        let text = App::format_ram_text(&data);
-        let rendered = format!("{:?}", text);
-
-        // Проверяем, что все значения присутствуют в тексте
-        assert!(rendered.contains("16.00"), "Should contain total memory");
-        assert!(rendered.contains("8.00"), "Should contain used memory");
-        assert!(rendered.contains("50."), "Should contain usage percentage");
-    }
-
-    #[test]
-    fn test_format_ram_text_high_usage_color() {
-        let data = RamData {
-            total_memory: 16.0,
-            used_memory: 14.0,
-            available_memory: 2.0,
-            usage_memory: 87.5,
-        };
-
-        let text = App::format_ram_text(&data);
-
-        // При usage > 80% используемая память должна быть красной
-        // Проверяем что текст содержит данные
-        assert!(!text.lines.is_empty(), "Text should not be empty");
-    }
-
-    #[test]
-    fn test_format_ram_text_low_usage() {
-        let data = RamData {
-            total_memory: 32.0,
-            used_memory: 4.0,
-            available_memory: 28.0,
-            usage_memory: 12.5,
-        };
-
-        let text = App::format_ram_text(&data);
-        let rendered = format!("{:?}", text);
-
-        assert!(rendered.contains("32.00"));
-        assert!(rendered.contains("4.00"));
-        assert!(rendered.contains("28.00"));
-    }
-
-    #[test]
-    fn test_format_ram_text_edge_case_zero() {
-        let data = RamData {
-            total_memory: 0.0,
-            used_memory: 0.0,
-            available_memory: 0.0,
-            usage_memory: 0.0,
-        };
-
-        let text = App::format_ram_text(&data);
-
-        // Не должно паниковать при нулевых значениях
-        assert!(!text.lines.is_empty());
-    }
-
-    #[test]
-    fn test_format_ram_text_contains_labels() {
-        let data = RamData {
-            total_memory: 8.0,
-            used_memory: 4.0,
-            available_memory: 4.0,
-            usage_memory: 50.0,
-        };
-
-        let text = App::format_ram_text(&data);
-        let rendered = format!("{:?}", text);
-
-        // Проверяем наличие меток
-        assert!(rendered.contains("Total"), "Should contain 'Total' label");
-        assert!(rendered.contains("Used"), "Should contain 'Used' label");
-        assert!(
-            rendered.contains("Available"),
-            "Should contain 'Available' label"
-        );
-        assert!(rendered.contains("Usage"), "Should contain 'Usage' label");
-    }
 }

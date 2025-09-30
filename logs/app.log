@@ -465,3 +465,253 @@ System { global CPU usage: 10.742087, load average: LoadAvg { one: 1.77, five: 1
 [2025-09-30 12:00:18] INFO: Weather: Yoshkar-Ola (10°C)
 [2025-09-30 12:00:22] INFO: Quit requested by user
 [2025-09-30 12:00:22] INFO: Application exited successfully
+[2025-09-30 12:38:34] :INFO:Application started
+[2025-09-30 12:38:34] :INFO:get_ram_info init
+[2025-09-30 12:38:35] :INFO:IP: 77.40.61.246
+[2025-09-30 12:38:36] :INFO:Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 12:38:36] :INFO:Weather: Yoshkar-Ola (11°C)
+[2025-09-30 13:22:39] INFO: Application started
+[2025-09-30 13:22:39] INFO: refresh_memory init
+System { global CPU usage: 8.535679, load average: LoadAvg { one: 1.14, five: 1.29, fifteen: 1.17 }, total memory: 8095080448, free memory: 420171776, total swap: 4047499264, free swap: 2914279424, nb CPUs: 8, nb processes: 1469 }
+[2025-09-30 13:22:39] INFO: get_ram_info init
+[2025-09-30 13:22:40] INFO: IP: 77.40.61.246
+[2025-09-30 13:22:40] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 13:22:41] INFO: Weather: Yoshkar-Ola (11°C)
+[2025-09-30 13:22:45] INFO: Quit requested by user
+[2025-09-30 13:22:45] INFO: Application exited successfully
+[2025-09-30 16:54:46] INFO: Application started
+[2025-09-30 16:54:46] INFO: refresh_memory init
+System { global CPU usage: 8.473197, load average: LoadAvg { one: 2.06, five: 1.95, fifteen: 1.79 }, total memory: 8095080448, free memory: 365002752, total swap: 4047499264, free swap: 2472255488, nb CPUs: 8, nb processes: 1530 }
+[2025-09-30 16:54:46] INFO: get_ram_info init
+[2025-09-30 16:54:47] INFO: IP: 77.40.61.246
+[2025-09-30 16:54:48] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 16:54:50] INFO: Weather: Yoshkar-Ola (8°C)
+[2025-09-30 16:54:51] INFO: Quit requested by user
+[2025-09-30 16:54:51] INFO: Application exited successfully
+[2025-09-30 17:04:03] INFO: Application started
+[2025-09-30 17:04:03] INFO: refresh_memory init
+System { global CPU usage: 8.551268, load average: LoadAvg { one: 2.1, five: 1.98, fifteen: 1.88 }, total memory: 8095080448, free memory: 308649984, total swap: 4047499264, free swap: 1707163648, nb CPUs: 8, nb processes: 1686 }
+[2025-09-30 17:04:03] INFO: get_ram_info init
+[2025-09-30 17:04:04] INFO: IP: 77.40.61.246
+[2025-09-30 17:04:04] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 17:04:05] INFO: Weather: Yoshkar-Ola (8°C)
+[2025-09-30 17:04:10] INFO: Quit requested by user
+[2025-09-30 17:04:10] INFO: Application exited successfully
+[2025-09-30 17:04:16] INFO: Application started
+[2025-09-30 17:04:16] INFO: refresh_memory init
+System { global CPU usage: 8.554706, load average: LoadAvg { one: 1.78, five: 1.91, fifteen: 1.86 }, total memory: 8095080448, free memory: 437563392, total swap: 4047499264, free swap: 730763264, nb CPUs: 8, nb processes: 1691 }
+[2025-09-30 17:04:16] INFO: get_ram_info init
+[2025-09-30 17:04:17] INFO: IP: 77.40.61.246
+[2025-09-30 17:04:17] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 17:04:18] INFO: Weather: Yoshkar-Ola (8°C)
+[2025-09-30 17:05:46] INFO: Quit requested by user
+[2025-09-30 17:05:46] INFO: Application exited successfully
+[2025-09-30 17:05:47] INFO: Application started
+[2025-09-30 17:05:47] INFO: refresh_memory init
+System { global CPU usage: 8.54256, load average: LoadAvg { one: 0.78, five: 1.55, fifteen: 1.73 }, total memory: 8095080448, free memory: 486346752, total swap: 4047499264, free swap: 480223232, nb CPUs: 8, nb processes: 1686 }
+[2025-09-30 17:05:47] INFO: get_ram_info init
+[2025-09-30 17:05:48] INFO: IP: 77.40.61.246
+[2025-09-30 17:05:48] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 17:05:49] INFO: Weather: Yoshkar-Ola (8°C)
+[2025-09-30 17:05:53] INFO: Quit requested by user
+[2025-09-30 17:05:53] INFO: Application exited successfully
+[2025-09-30 17:57:05] INFO: Application started
+[2025-09-30 17:57:05] INFO: refresh_memory init
+System { global CPU usage: 6.1210403, load average: LoadAvg { one: 0.85, five: 0.81, fifteen: 0.39 }, total memory: 8095084544, free memory: 338755584, total swap: 4047499264, free swap: 2774876160, nb CPUs: 8, nb processes: 1160 }
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu0
+[2025-09-30 17:57:05] INFO: Частота: 4138 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu1
+[2025-09-30 17:57:05] INFO: Частота: 3128 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu2
+[2025-09-30 17:57:05] INFO: Частота: 1108 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu3
+[2025-09-30 17:57:05] INFO: Частота: 4156 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu4
+[2025-09-30 17:57:05] INFO: Частота: 4198 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu5
+[2025-09-30 17:57:05] INFO: Частота: 2002 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu6
+[2025-09-30 17:57:05] INFO: Частота: 3314 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: CPU: cpu7
+[2025-09-30 17:57:05] INFO: Частота: 4152 MHz
+[2025-09-30 17:57:05] INFO: Вендор: GenuineIntel
+[2025-09-30 17:57:05] INFO: ---
+[2025-09-30 17:57:05] INFO: get_ram_info init
+[2025-09-30 17:57:06] INFO: IP: 77.40.61.246
+[2025-09-30 17:57:07] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 17:57:07] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 17:57:09] INFO: Quit requested by user
+[2025-09-30 17:57:09] INFO: Application exited successfully
+[2025-09-30 17:58:41] INFO: Application started
+[2025-09-30 17:58:42] INFO: refresh_memory init
+System { global CPU usage: 5.723478, load average: LoadAvg { one: 0.86, five: 0.81, fifteen: 0.44 }, total memory: 8095084544, free memory: 423337984, total swap: 4047499264, free swap: 2748715008, nb CPUs: 8, nb processes: 1153 }
+[2025-09-30 17:58:42] INFO: CPU len 8
+[2025-09-30 17:58:42] INFO: get_ram_info init
+[2025-09-30 17:58:43] INFO: IP: 77.40.61.246
+[2025-09-30 17:58:44] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 17:58:44] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 17:58:44] INFO: Quit requested by user
+[2025-09-30 17:58:44] INFO: Application exited successfully
+[2025-09-30 18:03:07] INFO: Application started
+[2025-09-30 18:03:07] INFO: refresh_memory init
+System { global CPU usage: 5.2043915, load average: LoadAvg { one: 1.43, five: 0.97, fifteen: 0.59 }, total memory: 8095084544, free memory: 321605632, total swap: 4047499264, free swap: 2805088256, nb CPUs: 8, nb processes: 1190 }
+[2025-09-30 18:03:07] INFO: CPU len 8
+[2025-09-30 18:03:07] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+[2025-09-30 18:03:07] INFO: CPU frequency: 3528 MHz
+[2025-09-30 18:03:07] INFO: get_ram_info init
+[2025-09-30 18:03:08] INFO: IP: 77.40.61.246
+[2025-09-30 18:03:08] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:03:09] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:03:12] INFO: Quit requested by user
+[2025-09-30 18:03:12] INFO: Application exited successfully
+[2025-09-30 18:28:02] INFO: Application started
+[2025-09-30 18:28:03] INFO: get_info init
+[2025-09-30 18:28:03] INFO: CPU len 8
+[2025-09-30 18:28:03] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 4300 MHz
+[2025-09-30 18:28:04] INFO: IP: 77.40.61.246
+[2025-09-30 18:28:04] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:28:05] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:28:06] INFO: Quit requested by user
+[2025-09-30 18:28:06] INFO: Application exited successfully
+[2025-09-30 18:29:07] INFO: Application started
+[2025-09-30 18:29:07] INFO: get_info init
+[2025-09-30 18:29:07] INFO: CPU len 8
+[2025-09-30 18:29:07] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 4300 MHz
+[2025-09-30 18:29:08] INFO: IP: 77.40.61.246
+[2025-09-30 18:29:09] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:29:09] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:29:17] INFO: Quit requested by user
+[2025-09-30 18:29:17] INFO: Application exited successfully
+[2025-09-30 18:29:24] INFO: Application started
+[2025-09-30 18:29:24] INFO: get_info init
+[2025-09-30 18:29:24] INFO: CPU len 8
+[2025-09-30 18:29:24] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 2637 MHz
+[2025-09-30 18:29:25] INFO: IP: 77.40.61.246
+[2025-09-30 18:29:25] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:29:25] INFO: Quit requested by user
+[2025-09-30 18:29:25] INFO: Application exited successfully
+[2025-09-30 18:30:23] INFO: Application started
+[2025-09-30 18:30:57] INFO: Application started
+[2025-09-30 18:30:58] INFO: get_info init
+[2025-09-30 18:30:58] INFO: CPU len 8
+[2025-09-30 18:30:58] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 4299 MHz
+[2025-09-30 18:30:58] INFO: IP: 77.40.61.246
+[2025-09-30 18:30:59] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:30:59] INFO: Quit requested by user
+[2025-09-30 18:30:59] INFO: Application exited successfully
+[2025-09-30 18:31:01] INFO: Application started
+[2025-09-30 18:31:01] INFO: get_info init
+[2025-09-30 18:31:01] INFO: CPU len 8
+[2025-09-30 18:31:01] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 1615 MHz
+[2025-09-30 18:31:02] INFO: IP: 77.40.61.246
+[2025-09-30 18:31:02] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:31:03] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:31:06] INFO: Quit requested by user
+[2025-09-30 18:31:06] INFO: Application exited successfully
+[2025-09-30 18:31:29] INFO: Application started
+[2025-09-30 18:31:29] INFO: get_info init
+[2025-09-30 18:31:29] INFO: CPU len 8
+[2025-09-30 18:31:29] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 4130 MHz
+[2025-09-30 18:31:30] INFO: IP: 77.40.61.246
+[2025-09-30 18:31:31] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:31:31] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:31:33] INFO: Quit requested by user
+[2025-09-30 18:31:33] INFO: Application exited successfully
+[2025-09-30 18:31:45] INFO: Application started
+[2025-09-30 18:31:45] INFO: get_info init
+[2025-09-30 18:31:45] INFO: CPU len 8
+[2025-09-30 18:31:45] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 4293 MHz
+[2025-09-30 18:31:46] INFO: IP: 77.40.61.246
+[2025-09-30 18:31:46] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:31:47] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:32:06] INFO: Quit requested by user
+[2025-09-30 18:32:06] INFO: Application exited successfully
+[2025-09-30 18:32:10] INFO: Application started
+[2025-09-30 18:32:10] INFO: get_info init
+[2025-09-30 18:32:10] INFO: CPU len 8
+[2025-09-30 18:32:10] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 3595 MHz
+[2025-09-30 18:32:11] INFO: IP: 77.40.61.246
+[2025-09-30 18:32:21] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:32:22] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:32:30] INFO: Quit requested by user
+[2025-09-30 18:32:30] INFO: Application exited successfully
+[2025-09-30 18:33:53] INFO: Application started
+[2025-09-30 18:33:53] INFO: get_info init
+[2025-09-30 18:33:53] INFO: CPU len 8
+[2025-09-30 18:33:53] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 2813 MHz
+[2025-09-30 18:33:54] INFO: IP: 77.40.61.246
+[2025-09-30 18:33:54] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:33:55] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:34:18] INFO: Quit requested by user
+[2025-09-30 18:34:18] INFO: Application exited successfully
+[2025-09-30 18:37:03] INFO: Application started
+[2025-09-30 18:37:03] INFO: get_info init
+[2025-09-30 18:37:03] INFO: CPU len 8
+[2025-09-30 18:37:03] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 3844 MHz
+[2025-09-30 18:37:04] INFO: IP: 77.40.61.246
+[2025-09-30 18:37:04] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:37:05] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:37:07] INFO: Quit requested by user
+[2025-09-30 18:37:07] INFO: Application exited successfully
+[2025-09-30 18:37:30] INFO: Application started
+[2025-09-30 18:37:30] INFO: get_info init
+[2025-09-30 18:37:30] INFO: CPU len 8
+[2025-09-30 18:37:30] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 4212 MHz
+[2025-09-30 18:37:31] INFO: IP: 77.40.61.246
+[2025-09-30 18:37:31] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:37:32] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:38:38] INFO: Quit requested by user
+[2025-09-30 18:38:38] INFO: Application exited successfully
+[2025-09-30 18:38:44] INFO: Application started
+[2025-09-30 18:38:44] INFO: get_info init
+[2025-09-30 18:38:44] INFO: CPU len 8
+[2025-09-30 18:38:44] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 4300 MHz
+[2025-09-30 18:38:45] INFO: IP: 77.40.61.246
+[2025-09-30 18:38:49] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:38:49] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:38:56] INFO: Quit requested by user
+[2025-09-30 18:38:56] INFO: Application exited successfully
+[2025-09-30 18:39:45] INFO: Application started
+[2025-09-30 18:39:45] INFO: get_info init
+[2025-09-30 18:39:45] INFO: CPU len 8
+[2025-09-30 18:39:45] INFO: CPU brand: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+CPU frequency: 3035 MHz
+[2025-09-30 18:39:46] INFO: IP: 77.40.61.246
+[2025-09-30 18:39:47] INFO: Latitude: 56.6376, Longitude: 47.905
+[2025-09-30 18:39:47] INFO: Weather: Yoshkar-Ola (6°C)
+[2025-09-30 18:40:01] INFO: Quit requested by user
+[2025-09-30 18:40:01] INFO: Application exited successfully

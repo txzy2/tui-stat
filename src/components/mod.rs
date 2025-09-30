@@ -2,6 +2,8 @@ mod footer;
 mod ram;
 mod welcome;
 
+pub use ram::format_sys_text;
+
 use ratatui::prelude::Stylize;
 
 use ratatui::{
@@ -70,7 +72,7 @@ pub fn render(frame: &mut Frame, app: &App) {
 
     let left_chunks = match generate_chunks(GenChunksParams {
         areas: main_chunks.to_vec(),
-        constraints: vec![97, 3],
+        constraints: vec![95, 5],
         direction: Direction::Vertical,
     }) {
         Ok(chunks) => chunks,
@@ -83,7 +85,7 @@ pub fn render(frame: &mut Frame, app: &App) {
     // let right_chunks = generate_chunks(&main_chunks, 20, 20);
 
     welcome::render_welcome(frame, left_chunks[0], app);
-    ram::render_memory_info(frame, left_chunks[1], &app.ram_text);
+    ram::render_memory_info(frame, left_chunks[1], &app.sys_text);
     footer::render_footer(frame, layout[1]);
 
     if app.show_quit_modal {

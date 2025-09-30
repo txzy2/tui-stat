@@ -1,9 +1,9 @@
-use tui_stat::system::memory::Ram;
+use tui_stat::system::memory::System;
 
 #[test]
-fn test_ram_collector_integration() {
-    let mut ram = Ram::new();
-    let data = ram.get_ram_info();
+fn test_system_collector_integration() {
+    let mut system = System::new();
+    let data = system.get_info();
 
     // Проверяем, что мы получаем реальные данные из системы
     assert!(
@@ -22,19 +22,22 @@ fn test_ram_collector_integration() {
         data.usage_memory >= 0.0 && data.usage_memory <= 100.0,
         "Usage should be a valid percentage"
     );
+
+    // Проверяем CPU данные
+    assert!(data.cpu.len > 0, "System should have at least one CPU core");
 }
 
 #[test]
-fn test_ram_collector_multiple_calls() {
-    println!("test_ram_collector_multiple_calls");
-    let mut ram = Ram::new();
+fn test_system_collector_multiple_calls() {
+    println!("test_system_collector_multiple_calls");
+    let mut system = System::new();
 
     // Первый вызов
-    let data1 = ram.get_ram_info();
+    let data1 = system.get_info();
     dbg!(&data1);
 
     // Второй вызов - данные могут немного отличаться
-    let data2 = ram.get_ram_info();
+    let data2 = system.get_info();
     dbg!(&data2);
 
     // Total memory не должна меняться между вызовами
@@ -45,12 +48,22 @@ fn test_ram_collector_multiple_calls() {
 
     // Used memory может меняться, но должна оставаться в разумных пределах
     assert!(data2.used_memory >= 0.0);
+
+    // CPU информация не должна меняться
+    assert_eq!(
+        data1.cpu.len, data2.cpu.len,
+        "CPU count should remain constant"
+    );
+    assert_eq!(
+        data1.cpu.brand, data2.cpu.brand,
+        "CPU brand should remain constant"
+    );
 }
 
 #[test]
-fn test_ram_data_consistency() {
-    let mut ram = Ram::new();
-    let data = ram.get_ram_info();
+fn test_system_data_consistency() {
+    let mut system = System::new();
+    let data = system.get_info();
 
     // Проверяем математическую согласованность
     // used + available ≈ total (с некоторой погрешностью)
@@ -65,10 +78,22 @@ fn test_ram_data_consistency() {
 }
 
 #[test]
-fn test_ram_collector_default() {
+fn test_system_collector_default() {
     // Проверяем, что Default trait работает корректно
-    let mut ram = Ram::default();
-    let data = ram.get_ram_info();
+    let mut system = System::default();
+    let data = system.get_info();
 
     assert!(data.total_memory > 0.0);
+    assert!(data.cpu.len > 0);
+}
+
+#[test]
+fn test_cpu_info() {
+    let mut system = System::new();
+    let data = system.get_info();
+
+    // Проверяем CPU данные
+    assert!(data.cpu.len > 0, "Should have at least one CPU core");
+    assert!(data.cpu.frequency > 0, "CPU frequency should be positive");
+    assert!(!data.cpu.brand.is_empty(), "CPU brand should not be empty");
 }

@@ -1,33 +1,73 @@
-use tui_stat::types::{GeoData, RamData, WeatherInfo};
+use tui_stat::types::{CpuInfo, GeoData, SystemData, WeatherInfo};
 
 #[test]
-fn test_ram_data_structure() {
-    let ram_data = RamData {
+fn test_system_data_structure() {
+    let cpu_info = CpuInfo {
+        len: 8,
+        frequency: 3600,
+        brand: "Intel Core i7".to_string(),
+    };
+
+    let system_data = SystemData {
         total_memory: 16.0,
         used_memory: 8.0,
         available_memory: 8.0,
         usage_memory: 50.0,
+        cpu: cpu_info,
     };
 
-    assert_eq!(ram_data.total_memory, 16.0);
-    assert_eq!(ram_data.used_memory, 8.0);
-    assert_eq!(ram_data.available_memory, 8.0);
-    assert_eq!(ram_data.usage_memory, 50.0);
+    assert_eq!(system_data.total_memory, 16.0);
+    assert_eq!(system_data.used_memory, 8.0);
+    assert_eq!(system_data.available_memory, 8.0);
+    assert_eq!(system_data.usage_memory, 50.0);
+    assert_eq!(system_data.cpu.len, 8);
+    assert_eq!(system_data.cpu.frequency, 3600);
 }
 
 #[test]
-fn test_ram_data_clone() {
-    let ram_data1 = RamData {
+fn test_system_data_clone() {
+    let cpu_info = CpuInfo {
+        len: 4,
+        frequency: 2400,
+        brand: "AMD Ryzen 5".to_string(),
+    };
+
+    let system_data1 = SystemData {
         total_memory: 32.0,
         used_memory: 16.0,
         available_memory: 16.0,
         usage_memory: 50.0,
+        cpu: cpu_info,
     };
 
-    let ram_data2 = ram_data1.clone();
+    let system_data2 = system_data1.clone();
 
-    assert_eq!(ram_data1.total_memory, ram_data2.total_memory);
-    assert_eq!(ram_data1.used_memory, ram_data2.used_memory);
+    assert_eq!(system_data1.total_memory, system_data2.total_memory);
+    assert_eq!(system_data1.used_memory, system_data2.used_memory);
+    assert_eq!(system_data1.cpu.len, system_data2.cpu.len);
+    assert_eq!(system_data1.cpu.brand, system_data2.cpu.brand);
+}
+
+#[test]
+fn test_cpu_info_structure() {
+    let cpu = CpuInfo {
+        len: 16,
+        frequency: 4800,
+        brand: "AMD Ryzen 9".to_string(),
+    };
+
+    assert_eq!(cpu.len, 16);
+    assert_eq!(cpu.frequency, 4800);
+    assert_eq!(cpu.brand, "AMD Ryzen 9");
+}
+
+#[test]
+fn test_cpu_info_default() {
+    let cpu = CpuInfo::default();
+
+    assert_eq!(cpu.len, 0);
+    assert_eq!(cpu.frequency, 0);
+    assert_eq!(cpu.brand, "");
 }
 
 #[test]
