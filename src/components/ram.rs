@@ -9,12 +9,15 @@ use ratatui::{
 use crate::types::SystemData;
 
 pub fn render_memory_info(frame: &mut Frame, area: Rect, text: &Text<'_>) {
-    let title = Line::from("System Info").bold().white().centered();
-    let block = Block::default().borders(Borders::NONE).title(title);
+    let title = Line::from("Press `Esc`, `Ctrl-C` or `q` to stop running.")
+        .bold()
+        .white()
+        .centered();
+    let block = Block::default().borders(Borders::TOP).title(title);
 
     frame.render_widget(
         Paragraph::new(text.clone())
-            .alignment(Alignment::Center)
+            .alignment(Alignment::Left)
             .block(block),
         area,
     );

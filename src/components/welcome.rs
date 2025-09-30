@@ -57,7 +57,7 @@ pub fn render_welcome(frame: &mut Frame, area: ratatui::layout::Rect, app: &App)
     };
 
     let block = Block::default()
-        .borders(Borders::RIGHT)
+        .borders(Borders::TOP)
         .border_style(Style::default().fg(Color::White))
         .title(title_line.centered());
 
