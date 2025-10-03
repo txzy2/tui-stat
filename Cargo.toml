@@ -1,5 +1,5 @@
 [package]
-name = "tui_stat"
+name = "tui-stat"
 version = "0.1.0"
 description = "An example generated using the simple template"
 authors = ["txzy2 <txzy2@yandex.ru>"]

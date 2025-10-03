@@ -5,9 +5,15 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: taiki-e/create-gh-release-action@v1
@@ -19,6 +25,8 @@ jobs:
 
   upload-assets:
     needs: create-release
+    permissions:
+      contents: write
     strategy:
       matrix:
         include:
