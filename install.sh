@@ -7,7 +7,7 @@ set -e
 
 # Default installation directory
 INSTALL_DIR="/usr/local/bin"
-BINARY_NAME="tui_stat"
+BINARY_NAME="tui-stat"
 GITHUB_REPO="txzy2/tui-stat"  # Update with your actual GitHub username/repo
 
 # Colors for output
