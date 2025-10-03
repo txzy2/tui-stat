@@ -28,6 +28,20 @@ chmod +x install.sh
 ./install.sh
 ```
 
+**Note**: If the installation runs without root privileges, the binary will be installed to `~/.local/bin`. Make sure this directory is in your PATH by adding it to your shell configuration:
+
+For zsh (default on macOS):
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+For bash:
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
 ### From Source
 
 To build from source:
