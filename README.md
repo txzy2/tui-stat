@@ -42,6 +42,13 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
+## Prerequisites
+
+The installation script requires the following tools to be available on your system:
+- `curl` - for downloading assets
+- `tar` - for extracting .tar.gz archives (most Linux/macOS systems have this by default)
+- `unzip` - for extracting .zip archives (required for Windows binaries)
+
 ### From Source
 
 To build from source:

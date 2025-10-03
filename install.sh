@@ -91,30 +91,43 @@ install_binary() {
     fi
     
     local asset_name="${BINARY_NAME}-${target}${archive_ext}"
-    local download_url="https://github.com/$GITHUB_REPO/releases/download/$tag_name/${asset_name}"
+    # Use the direct download URL for GitHub releases
+    local download_url="https://github.com/$GITHUB_REPO/releases/download/$tag_name/$asset_name"
 
-    print_info "Downloading $BINARY_NAME for $target..."
-    curl -L -o "/tmp/$BINARY_NAME${archive_ext}" "$download_url"
+    print_info "Downloading $BINARY_NAME for $target from: $download_url"
+    
+    # Download with error checking
+    if ! curl -L -f -o "/tmp/$asset_name" "$download_url"; then
+        print_error "Failed to download asset from: $download_url"
+        print_info "Please ensure the release is published and the asset exists."
+        print_info "Visit https://github.com/$GITHUB_REPO/releases to verify."
+        exit 1
+    fi
     
     # Extract the binary
     print_info "Extracting $BINARY_NAME..."
     if [[ "$archive_ext" == ".tar.gz" ]]; then
-        tar -xzf "/tmp/$BINARY_NAME${archive_ext}" -C /tmp
+        # Create a temporary directory to extract to avoid polluting /tmp
+        local temp_dir=$(mktemp -d)
+        tar -xzf "/tmp/$asset_name" -C "$temp_dir"
+        # Find the actual binary in the extracted content
+        EXTRACTED_BINARY=$(find "$temp_dir" -type f -executable -name "$BINARY_NAME" | head -n 1)
     else
         # For .zip files, need to install unzip if not available
         if ! command -v unzip &> /dev/null; then
             print_error "unzip is required but not installed"
             exit 1
         fi
-        unzip -o "/tmp/$BINARY_NAME${archive_ext}" -d /tmp
+        local temp_dir=$(mktemp -d)
+        unzip -o "/tmp/$asset_name" -d "$temp_dir"
+        # Find the actual binary in the extracted content
+        EXTRACTED_BINARY=$(find "$temp_dir" -type f -executable -name "$BINARY_NAME" | head -n 1)
     fi
 
-    # The extracted binary might be in a subdirectory, so find it
-    EXTRACTED_BINARY=$(find /tmp -name "$BINARY_NAME" -type f -executable | head -n 1)
     if [ -z "$EXTRACTED_BINARY" ]; then
-        # If not found, try to look for any executable file in the temp directory
         print_error "Could not find extracted binary"
-        ls -la /tmp/
+        print_info "Contents of temp directory: "
+        ls -la "$temp_dir"/
         exit 1
     fi
 
@@ -132,11 +145,8 @@ install_binary() {
     fi
 
     # Cleanup
-    rm "/tmp/$BINARY_NAME${archive_ext}"  # Remove the archive file
-    rm "$EXTRACTED_BINARY"  # Remove the extracted binary after installation
-
-    print_info "$BINARY_NAME installed successfully!"
-    print_info "Run '$BINARY_NAME --help' to get started"
+    rm "/tmp/$asset_name"  # Remove the archive file
+    rm -rf "$temp_dir"     # Remove the temporary extraction directory
 }
 
 # Parse arguments
