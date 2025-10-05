@@ -1,2 +1,2 @@
 pub mod keys_handler;
-pub mod memory;
+pub mod system_info;

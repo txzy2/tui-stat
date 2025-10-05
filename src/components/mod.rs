@@ -11,7 +11,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::{app::App, logger};
+use crate::app::App;
 
 pub fn render(frame: &mut Frame, app: &App) {
     let layout = Layout::default()

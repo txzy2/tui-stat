@@ -13,7 +13,7 @@ use tokio::{
 
 use crate::{
     components, logger,
-    system::{keys_handler, memory::System},
+    system::{keys_handler, system_info::System},
     types::{GeoData, ListState, SystemData, WeatherInfo, WeatherResponse},
 };
 

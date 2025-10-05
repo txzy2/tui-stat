@@ -1,3 +1,4 @@
+use chrono::Local;
 use ratatui::{
     prelude::Stylize,
     style::{Color, Modifier, Style},
@@ -17,6 +18,7 @@ impl Default for ListState {
     }
 }
 
+//TODO: убрать после подключения локальной бaзы
 fn generate_random_list() -> Vec<TODOData> {
     use crate::types::Status::*;
     let titles = [
@@ -45,6 +47,7 @@ fn generate_random_list() -> Vec<TODOData> {
             id: i,
             title: titles[i as usize % titles.len()],
             message: messages[i as usize % messages.len()],
+            date: Local::now(), // Assign the DateTime<Local> directly
             status: statuses[i as usize % statuses.len()],
         };
         list.push(todo);
@@ -103,7 +106,13 @@ impl ListState {
 }
 
 pub fn render_list(frame: &mut Frame, area: ratatui::layout::Rect, state: &ListState) {
-    let title = Line::from("TODOS").bold().white().centered();
+    let title = Line::from(vec![
+        Span::raw("[== TODOS PANEL ==]"),
+        Span::styled(" Move: ", Style::default().fg(Color::DarkGray)),
+        Span::styled("k/j (Up/Down)", Style::default().fg(Color::White)),
+    ])
+    .bold()
+    .centered();
 
     // Создаем список элементов для отображения
     let items: Vec<ListItem> = state
@@ -111,27 +120,34 @@ pub fn render_list(frame: &mut Frame, area: ratatui::layout::Rect, state: &ListS
         .iter()
         .enumerate()
         .map(|(i, item)| {
+            let status_str = format!("[{:?}]", item.status);
+            let padded_status = format!("{:12}", status_str);
+
             let content = if state.selected == Some(i) {
                 Line::from(vec![
                     Span::styled(
-                        format!("   > [{:?}]", item.status),
-                        Style::default().fg(item.status.get_color()),
+                        format!("  ● {} ", padded_status),
+                        Style::default()
+                            .fg(Color::Rgb(255, 203, 164))
+                            .add_modifier(Modifier::BOLD),
                     ),
                     Span::styled(
-                        format!(" {}: {} ", item.id, item.title), // Added 3 spaces for padding
-                        Style::default().add_modifier(Modifier::BOLD),
+                        format!("{} ", item.title),
+                        Style::default()
+                            .fg(Color::Rgb(255, 203, 164))
+                            .add_modifier(Modifier::ITALIC),
                     ),
                 ])
             } else {
                 Line::from(vec![
                     Span::styled(
-                        format!("   {}: {} ", item.id, item.title), // Added 3 spaces for padding
-                        Style::default().add_modifier(Modifier::BOLD),
+                        format!("  ○ {} ", padded_status),
+                        Style::default().fg(match item.status {
+                            crate::types::Status::Done => Color::Rgb(80, 80, 80),
+                            _ => Color::DarkGray,
+                        }),
                     ),
-                    Span::styled(
-                        format!("[{:?}]", item.status),
-                        Style::default().fg(Color::White),
-                    ),
+                    Span::styled(format!("{} ", item.title), Style::default().fg(Color::Gray)),
                 ])
             };
             ListItem::new(content)
@@ -141,11 +157,15 @@ pub fn render_list(frame: &mut Frame, area: ratatui::layout::Rect, state: &ListS
     let list = List::new(items)
         .block(
             Block::default()
-                .border_style(Style::default().fg(Color::White))
+                .border_style(Style::default().fg(Color::Rgb(80, 80, 80)))
                 .borders(Borders::RIGHT)
                 .title(title),
         )
-        .highlight_style(Style::default().add_modifier(Modifier::REVERSED));
+        .highlight_style(
+            Style::default()
+                .bg(Color::Rgb(60, 60, 60))
+                .add_modifier(Modifier::BOLD),
+        );
 
     frame.render_widget(list, area);
 }

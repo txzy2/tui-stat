@@ -1,3 +1,4 @@
+use chrono::{DateTime, Local};
 use ratatui::style::Color;
 use serde::Deserialize;
 
@@ -42,8 +43,8 @@ pub struct CpuInfo {
 
 #[derive(Debug, Clone, Copy)]
 pub enum Status {
-    Active,
     Todo,
+    Active,
     Done,
     Cancelled,
 }
@@ -54,7 +55,7 @@ impl Status {
             self::Status::Active => Color::Yellow,
             self::Status::Todo => Color::Red,
             self::Status::Done => Color::Green,
-            self::Status::Cancelled => Color::DarkGray,
+            self::Status::Cancelled => Color::Gray,
         }
     }
 }
@@ -65,6 +66,7 @@ pub struct TODOData {
     pub id: i64,
     pub title: &'static str,
     pub message: &'static str,
+    pub date: DateTime<Local>,
     pub status: Status,
 }
 
