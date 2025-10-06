@@ -2,3 +2,5 @@
 review/
 logs/
 tests/
+data.db
+todo.db
