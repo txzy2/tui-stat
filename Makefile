@@ -5,7 +5,7 @@ build:
 	cargo build --release
 
 release:
-	./target/release/tui_stat
+	./target/release/tui-stat
 
 test:
 	cargo test -- --show-output
