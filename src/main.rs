@@ -3,11 +3,11 @@ use tokio::runtime::Runtime;
 use tui_stat::{app::App, logger};
 
 fn main() -> color_eyre::Result<()> {
-    color_eyre::install()?;
-    dotenvy::dotenv().ok();
-
     logger::init("logs/app.log")?;
     logger::info("Application started")?;
+
+    color_eyre::install()?;
+    dotenvy::dotenv().ok();
 
     let runtime = Runtime::new()?;
     let handle = runtime.handle().clone();

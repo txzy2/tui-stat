@@ -16,12 +16,90 @@ impl KeyHandler {
     }
 
     fn on_key_event(app: &mut App, key: KeyEvent) {
-        if app.show_quit_modal {
+        if app.show_add_modal {
+            // Handle input modal events
+            match key.code {
+                KeyCode::Enter => {
+                    // Save the new TODO if title is not empty
+                    if !app.input_title.is_empty() {
+                        if let Err(e) = app.add_todo_to_db(
+                            &app.input_title,
+                            &app.input_message,
+                            crate::types::Status::Todo,
+                        ) {
+                            let _ = logger::error(format!("Error adding TODO to DB: {}", e));
+                        } else if let Err(e) = app.load_todos_from_db() {
+                            let _ = logger::error(format!(
+                                "Error loading todos from DB after add: {}",
+                                e
+                            ));
+                        }
+                    }
+                    // Exit input mode
+                    app.show_add_modal = false;
+                    app.input_title.clear();
+                    app.input_message.clear();
+                    app.input_current_field = crate::app::InputField::Title;
+                }
+                KeyCode::Esc => {
+                    // Cancel input
+                    app.show_add_modal = false;
+                    app.input_title.clear();
+                    app.input_message.clear();
+                    app.input_current_field = crate::app::InputField::Title;
+                }
+                KeyCode::Tab => {
+                    // Switch between input fields
+                    app.input_current_field = match app.input_current_field {
+                        crate::app::InputField::Title => crate::app::InputField::Message,
+                        crate::app::InputField::Message => crate::app::InputField::Title,
+                    };
+                }
+                KeyCode::Backspace => {
+                    // Handle backspace in the current input field
+                    match app.input_current_field {
+                        crate::app::InputField::Title => {
+                            if !app.input_title.is_empty() {
+                                app.input_title.pop();
+                            }
+                        }
+                        crate::app::InputField::Message => {
+                            if !app.input_message.is_empty() {
+                                app.input_message.pop();
+                            }
+                        }
+                    }
+                }
+                KeyCode::Char(c) => {
+                    // Add character to the current input field
+                    match app.input_current_field {
+                        crate::app::InputField::Title => {
+                            if app.input_title.len() < 50 {
+                                // Limit title length
+                                app.input_title.push(c);
+                            }
+                        }
+                        crate::app::InputField::Message => {
+                            if app.input_message.len() < 200 {
+                                // Limit message length
+                                app.input_message.push(c);
+                            }
+                        }
+                    }
+                }
+                _ => {}
+            }
+        } else if app.show_quit_modal {
             match key.code {
                 KeyCode::Char('y') | KeyCode::Char('Y') | KeyCode::Enter => Self::quit(app),
                 KeyCode::Char('n') | KeyCode::Char('N') | KeyCode::Esc => {
                     app.show_quit_modal = false
                 }
+                _ => {}
+            }
+        } else if app.show_help {
+            match key.code {
+                KeyCode::Esc | KeyCode::Char('q') => app.show_help = false,
                 _ => {}
             }
         } else {
@@ -37,8 +115,42 @@ impl KeyHandler {
                 (_, KeyCode::Char('j')) => {
                     app.list_state.next();
                 }
-                (_, KeyCode::Enter) => {
-                    app.show_item = !app.show_item;
+                (_, KeyCode::Char('?')) => app.show_help = true,
+                (_, KeyCode::Char('T')) => {
+                    if let Some(i) = app.list_state.selected {
+                        let current_status = app.list_state.items[i].status;
+                        let new_status = match current_status {
+                            crate::types::Status::Todo => crate::types::Status::Active,
+                            crate::types::Status::Active => crate::types::Status::Done,
+                            crate::types::Status::Done => crate::types::Status::Cancelled,
+                            crate::types::Status::Cancelled => crate::types::Status::Todo,
+                        };
+
+                        let _ =
+                            app.update_todo_status_in_db(app.list_state.items[i].id, new_status);
+
+                        app.list_state.items[i].toggle_status();
+                    }
+                }
+                (_, KeyCode::Char('A')) => {
+                    // Enter input mode for adding a new TODO
+                    app.show_add_modal = true;
+                    app.input_title.clear();
+                    app.input_message.clear();
+                    app.input_cursor_pos = 0;
+                    app.input_current_field = crate::app::InputField::Title;
+                }
+                (_, KeyCode::Char('D')) => {
+                    if let Some(i) = app.list_state.selected {
+                        if let Err(e) = app.delete_todo_from_db(app.list_state.items[i].id) {
+                            let _ = logger::error(&format!("Error deleting TODO from DB: {}", e));
+                        } else if let Err(e) = app.load_todos_from_db() {
+                            let _ = logger::error(&format!(
+                                "Error loading todos from DB after delete: {}",
+                                e
+                            ));
+                        }
+                    }
                 }
                 _ => {}
             }

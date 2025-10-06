@@ -9,10 +9,13 @@ use ratatui::{
 use crate::types::SystemData;
 
 pub fn render_memory_info(frame: &mut Frame, area: Rect, text: &Text<'_>) {
-    let title = Line::from("Press `Ctrl-C` or `q` to stop running.")
-        .bold()
-        .white()
-        .centered();
+    let title = Line::from(vec![
+        Span::raw("Press `Ctrl-C` or `q` to stop running."),
+        Span::raw(" ?: Toggle help menu"),
+    ])
+    .bold()
+    .dark_gray()
+    .centered();
     let block = Block::default().borders(Borders::TOP).title(title);
 
     frame.render_widget(

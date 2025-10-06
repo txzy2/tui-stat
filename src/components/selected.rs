@@ -9,9 +9,19 @@ use ratatui::{
 use crate::types::{ListState, TODOData};
 
 pub fn render_select(frame: &mut Frame, area: Rect, item: &ListState) {
-    let data: &TODOData = &item.items[item.selected.unwrap()];
+    if item.items.is_empty() {
+        return;
+    }
 
-    //TODO: Сделать после добавления даты в заголовке отображение спарва
+    let selected_index = match item.selected {
+        Some(index) if index < item.items.len() => index,
+        _ => {
+            return;
+        }
+    };
+
+    let data: &TODOData = &item.items[selected_index];
+
     let title = Line::from(vec![
         Span::raw(format!("Title: {}", data.title)),
         Span::styled(

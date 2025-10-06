@@ -18,7 +18,7 @@ pub fn render_quit_modal(frame: &mut Frame) {
             Line::from(vec![
                 Span::raw(" "),
                 Span::styled(
-                    "⚠ Выход из приложения",
+                    "⚠ Exit",
                     Style::default()
                         .fg(Color::Gray)
                         .add_modifier(Modifier::BOLD),

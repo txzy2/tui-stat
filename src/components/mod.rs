@@ -1,4 +1,6 @@
 mod exit;
+mod help;
+pub mod input;
 pub mod list;
 mod ram;
 mod selected;
@@ -44,6 +46,14 @@ pub fn render(frame: &mut Frame, app: &App) {
 
     if app.show_quit_modal {
         exit::render_quit_modal(frame);
+    }
+
+    if app.show_help {
+        help::render_help_modal(frame);
+    }
+    
+    if app.show_add_modal {
+        input::render_input_modal(frame, app);
     }
 }
 

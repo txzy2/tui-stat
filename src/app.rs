@@ -3,9 +3,16 @@ use std::{
     time::{Duration, Instant},
 };
 
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum InputField {
+    Title,
+    Message,
+}
+
 use crossterm::event;
 use ratatui::text::Text;
 use reqwest::Client;
+use rusqlite::{Connection, Result};
 use tokio::{
     runtime::Handle,
     sync::mpsc::{self, error::TryRecvError, UnboundedReceiver, UnboundedSender},
@@ -14,7 +21,7 @@ use tokio::{
 use crate::{
     components, logger,
     system::{keys_handler, system_info::System},
-    types::{GeoData, ListState, SystemData, WeatherInfo, WeatherResponse},
+    types::{GeoData, ListState, SystemData, TODOData, WeatherInfo, WeatherResponse},
 };
 
 enum AsyncUpdate {
@@ -40,6 +47,14 @@ pub struct App {
     updates_tx: UnboundedSender<AsyncUpdate>,
     pub list_state: ListState,
     pub show_item: bool,
+    pub show_help: bool,
+    db_connection: Option<Connection>,
+    // Input state for adding new TODO
+    pub show_add_modal: bool,
+    pub input_title: String,
+    pub input_message: String,
+    pub input_cursor_pos: usize,
+    pub input_current_field: InputField, // 0 for title, 1 for message
 }
 
 impl fmt::Debug for App {
@@ -63,7 +78,31 @@ impl App {
         let sys_data = sys_collector.get_info();
         let sys_text = components::format_sys_text(&sys_data);
 
-        Self {
+        // Initialize database connection
+        let db_connection = match Self::open_sqlite_con("data.db") {
+            Ok(conn) => {
+                // Create the todos table if it doesn't exist
+                if let Err(e) = conn.execute(
+                    "CREATE TABLE IF NOT EXISTS todos (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        title TEXT NOT NULL,
+                        message TEXT,
+                        status TEXT NOT NULL,
+                        date TEXT NOT NULL
+                    )",
+                    [],
+                ) {
+                    eprintln!("Error creating table: {}", e);
+                }
+                Some(conn)
+            }
+            Err(e) => {
+                eprintln!("Error opening database: {}", e);
+                None
+            }
+        };
+
+        let mut app = Self {
             running: true,
             ip: String::new(),
             geo_data: None,
@@ -79,11 +118,30 @@ impl App {
             updates_tx,
             list_state: ListState::new(),
             show_item: false,
+            show_help: false,
+            db_connection,
+            show_add_modal: false,
+            input_title: String::new(),
+            input_message: String::new(),
+            input_cursor_pos: 0,
+            input_current_field: InputField::Title,
+        };
+
+        // Load todos from database after initialization
+        if let Err(e) = app.load_todos_from_db() {
+            eprintln!("Error loading todos from database: {}", e);
         }
+
+        app
+    }
+
+    fn open_sqlite_con(db_name: &str) -> Result<Connection, rusqlite::Error> {
+        Connection::open(db_name)
     }
 
     pub fn run(mut self, mut terminal: ratatui::DefaultTerminal) -> color_eyre::Result<()> {
         self.running = true;
+
         self.spawn_initial_fetch();
 
         let tick_rate = Duration::from_millis(1000);
@@ -106,6 +164,125 @@ impl App {
             }
         }
         Ok(())
+    }
+
+    pub fn load_todos_from_db(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+        if let Some(ref conn) = self.db_connection {
+            let mut stmt =
+                conn.prepare("SELECT id, title, message, status, date FROM todos ORDER BY id")?;
+
+            let todo_iter = stmt.query_map([], |row| {
+                let id: i64 = row.get(0)?;
+                let title: String = row.get(1)?;
+                let message: String = row.get(2)?;
+                let status_str: String = row.get(3)?;
+                let date_str: String = row.get(4)?;
+
+                let status = match status_str.as_str() {
+                    "Todo" => crate::types::Status::Todo,
+                    "Active" => crate::types::Status::Active,
+                    "Done" => crate::types::Status::Done,
+                    "Cancelled" => crate::types::Status::Cancelled,
+                    _ => crate::types::Status::Todo, // default
+                };
+
+                let date = chrono::DateTime::parse_from_rfc3339(&date_str)
+                    .unwrap_or_else(|_| chrono::Local::now().into())
+                    .with_timezone(&chrono::Local);
+
+                // Convert String to &'static str by leaking the memory (not ideal but needed for the current struct design)
+                Ok(TODOData {
+                    id,
+                    title: Box::leak(title.into_boxed_str()),
+                    message: Box::leak(message.into_boxed_str()),
+                    status,
+                    date,
+                })
+            })?;
+
+            let mut items = Vec::new();
+            for todo_result in todo_iter {
+                if let Ok(todo) = todo_result {
+                    items.push(todo);
+                }
+            }
+
+            // Update the list state with loaded items
+            self.list_state.items = items;
+
+            // Reset selection if needed
+            if !self.list_state.items.is_empty() {
+                self.list_state.selected = Some(0);
+            } else {
+                self.list_state.selected = None;
+            }
+        }
+        Ok(())
+    }
+
+    pub fn add_todo_to_db(
+        &self,
+        title: &str,
+        message: &str,
+        status: crate::types::Status,
+    ) -> Result<i64> {
+        if let Some(ref conn) = self.db_connection {
+            let status_str = match status {
+                crate::types::Status::Todo => "Todo",
+                crate::types::Status::Active => "Active",
+                crate::types::Status::Done => "Done",
+                crate::types::Status::Cancelled => "Cancelled",
+            };
+
+            let date_str = chrono::Local::now().to_rfc3339();
+
+            conn.execute(
+                "INSERT INTO todos (title, message, status, date) VALUES (?1, ?2, ?3, ?4)",
+                [title, message, status_str, &date_str],
+            )?;
+
+            Ok(conn.last_insert_rowid())
+        } else {
+            Err(rusqlite::Error::SqliteFailure(
+                rusqlite::ffi::Error::new(1),
+                Some("Database connection not available".to_string()),
+            ))
+        }
+    }
+
+    pub fn update_todo_status_in_db(&self, id: i64, status: crate::types::Status) -> Result<()> {
+        if let Some(ref conn) = self.db_connection {
+            let status_str = match status {
+                crate::types::Status::Todo => "Todo",
+                crate::types::Status::Active => "Active",
+                crate::types::Status::Done => "Done",
+                crate::types::Status::Cancelled => "Cancelled",
+            };
+
+            conn.execute(
+                "UPDATE todos SET status = ?1 WHERE id = ?2",
+                [status_str, &id.to_string()],
+            )?;
+
+            Ok(())
+        } else {
+            Err(rusqlite::Error::SqliteFailure(
+                rusqlite::ffi::Error::new(1),
+                Some("Database connection not available".to_string()),
+            ))
+        }
+    }
+
+    pub fn delete_todo_from_db(&self, id: i64) -> Result<()> {
+        if let Some(ref conn) = self.db_connection {
+            conn.execute("DELETE FROM todos WHERE id = ?1", [id])?;
+            Ok(())
+        } else {
+            Err(rusqlite::Error::SqliteFailure(
+                rusqlite::ffi::Error::new(1),
+                Some("Database connection not available".to_string()),
+            ))
+        }
     }
 
     fn spawn_initial_fetch(&self) {

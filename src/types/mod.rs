@@ -70,8 +70,77 @@ pub struct TODOData {
     pub status: Status,
 }
 
+impl TODOData {
+    pub fn toggle_status(&mut self) -> Status {
+        self.status = match self.status {
+            Status::Todo => Status::Active,
+            Status::Active => Status::Done,
+            Status::Done => Status::Cancelled,
+            Status::Cancelled => Status::Todo,
+        };
+        self.status
+    }
+}
+
 #[derive(Debug)]
 pub struct ListState {
     pub selected: Option<usize>,
     pub items: Vec<TODOData>,
+}
+
+impl Default for ListState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl ListState {
+    pub fn new() -> Self {
+        Self {
+            selected: Some(0),
+            items: Vec::new(),
+        }
+    }
+
+    pub fn next(&mut self) {
+        let len = self.items.len();
+        if len == 0 {
+            return;
+        }
+
+        let i = match self.selected {
+            Some(i) => {
+                if i >= len - 1 {
+                    0
+                } else {
+                    i + 1
+                }
+            }
+            None => 0,
+        };
+        self.selected = Some(i);
+    }
+
+    pub fn previous(&mut self) {
+        let len = self.items.len();
+        if len == 0 {
+            return;
+        }
+
+        let i = match self.selected {
+            Some(i) => {
+                if i == 0 {
+                    len - 1
+                } else {
+                    i - 1
+                }
+            }
+            None => 0,
+        };
+        self.selected = Some(i);
+    }
+
+    pub fn selected_item(&self) -> Option<&TODOData> {
+        self.selected.and_then(|i| self.items.get(i))
+    }
 }
