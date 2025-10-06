@@ -51,13 +51,12 @@ pub fn render(frame: &mut Frame, app: &App) {
     if app.show_help {
         help::render_help_modal(frame);
     }
-    
+
     if app.show_add_modal {
         input::render_input_modal(frame, app);
     }
 }
 
-/// Helper function to center a rectangle
 pub fn center_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
     let popup_layout = Layout::default()
         .direction(Direction::Vertical)
