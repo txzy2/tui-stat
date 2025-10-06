@@ -201,10 +201,8 @@ impl App {
             })?;
 
             let mut items = Vec::new();
-            for todo_result in todo_iter {
-                if let Ok(todo) = todo_result {
-                    items.push(todo);
-                }
+            for todo in todo_iter.flatten() {
+                items.push(todo);
             }
 
             // Update the list state with loaded items

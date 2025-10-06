@@ -143,9 +143,9 @@ impl KeyHandler {
                 (_, KeyCode::Char('D')) => {
                     if let Some(i) = app.list_state.selected {
                         if let Err(e) = app.delete_todo_from_db(app.list_state.items[i].id) {
-                            let _ = logger::error(&format!("Error deleting TODO from DB: {}", e));
+                            let _ = logger::error(format!("Error deleting TODO from DB: {}", e));
                         } else if let Err(e) = app.load_todos_from_db() {
-                            let _ = logger::error(&format!(
+                            let _ = logger::error(format!(
                                 "Error loading todos from DB after delete: {}",
                                 e
                             ));
