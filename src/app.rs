@@ -168,8 +168,13 @@ impl App {
 
     pub fn load_todos_from_db(&mut self) -> Result<(), Box<dyn std::error::Error>> {
         if let Some(ref conn) = self.db_connection {
-            let mut stmt =
-                conn.prepare("SELECT id, title, message, status, date FROM todos ORDER BY id")?;
+            let mut stmt = conn.prepare(
+                "
+                    SELECT id, title, message, status, date 
+                    FROM todos ORDER BY CASE status
+                    WHEN 'Active' THEN 1 WHEN 'Todo' THEN 2 WHEN 'Cancelled' THEN 3 WHEN 'Done' THEN 4 ELSE 5 END, id
+                ",
+            )?;
 
             let todo_iter = stmt.query_map([], |row| {
                 let id: i64 = row.get(0)?;
@@ -248,7 +253,11 @@ impl App {
         }
     }
 
-    pub fn update_todo_status_in_db(&self, id: i64, status: crate::types::Status) -> Result<()> {
+    pub fn update_todo_status_in_db(
+        &mut self,
+        id: i64,
+        status: crate::types::Status,
+    ) -> Result<()> {
         if let Some(ref conn) = self.db_connection {
             let status_str = match status {
                 crate::types::Status::Todo => "Todo",

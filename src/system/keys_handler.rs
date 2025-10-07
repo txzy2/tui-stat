@@ -126,10 +126,14 @@ impl KeyHandler {
                             crate::types::Status::Cancelled => crate::types::Status::Todo,
                         };
 
-                        let _ =
-                            app.update_todo_status_in_db(app.list_state.items[i].id, new_status);
-
-                        app.list_state.items[i].toggle_status();
+                        if let Err(e) = app.update_todo_status_in_db(app.list_state.items[i].id, new_status) {
+                            let _ = logger::error(format!("Error updating TODO status in DB: {}", e));
+                        } else if let Err(e) = app.load_todos_from_db() {
+                            let _ = logger::error(format!(
+                                "Error loading todos from DB after status update: {}",
+                                e
+                            ));
+                        }
                     }
                 }
                 (_, KeyCode::Char('A')) => {
