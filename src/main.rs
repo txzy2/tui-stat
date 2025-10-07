@@ -1,6 +1,6 @@
 #![warn(clippy::all, clippy::pedantic)]
 use tokio::runtime::Runtime;
-use tui_stat::{app::App, logger};
+use tuitask::{app::App, logger};
 
 fn main() -> color_eyre::Result<()> {
     logger::init("logs/app.log")?;
