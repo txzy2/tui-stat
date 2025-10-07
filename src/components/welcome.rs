@@ -25,7 +25,7 @@ pub fn render_welcome(frame: &mut Frame, area: ratatui::layout::Rect, app: &App)
 
     let title_line = if let Some(weather) = app.weather_info() {
         Line::from(vec![
-            Span::styled("TUI DISPATCHER ", Style::default().fg(value_color).bold()),
+            Span::styled("TUITASK ", Style::default().fg(value_color).bold()),
             Span::styled("[", Style::default().fg(label_color)),
             Span::styled(
                 datetime.format("%H:%M:%S").to_string(),

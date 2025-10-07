@@ -1,172 +1,149 @@
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout},
-    style::{Color, Style},
+    style::{Color, Modifier, Style},
     text::{Line, Span},
-    widgets::{Block, Borders, Paragraph},
+    widgets::{Block, Borders, Clear, Paragraph},
     Frame,
 };
 
 use crate::components;
 
 pub fn render_help_modal(frame: &mut Frame) {
-    let modal_area = components::center_rect(50, 40, frame.area());
+    let modal_area = components::center_rect(40, 50, frame.area());
+
+    // Clear the area to avoid overlapping
+    frame.render_widget(Clear, modal_area);
 
     let modal_block = Block::default()
         .title(
             Line::from(vec![
-                Span::raw(" "),
                 Span::styled(
-                    "Help menu",
-                    Style::default().fg(Color::Gray).bg(Color::Rgb(30, 30, 40)),
+                    " HELP ",
+                    Style::default()
+                        .fg(Color::LightBlue)
+                        .bg(Color::Rgb(30, 30, 40))
+                        .add_modifier(Modifier::BOLD),
                 ),
                 Span::raw(" "),
             ])
             .alignment(Alignment::Center),
         )
         .borders(Borders::ALL)
-        .border_type(ratatui::widgets::BorderType::Rounded)
-        .border_style(Style::default().fg(Color::Gray))
-        .style(Style::default().bg(Color::Rgb(30, 30, 40)));
+        .border_type(ratatui::widgets::BorderType::Double)
+        .border_style(Style::default().fg(Color::DarkGray))
+        .style(Style::default().bg(Color::Rgb(25, 25, 35)));
 
     frame.render_widget(modal_block, modal_area);
 
     let content_layout = Layout::default()
         .direction(Direction::Vertical)
-        .margin(2)
+        .horizontal_margin(2)
+        .vertical_margin(1)
         .constraints([
-            Constraint::Length(1), // Title spacing
+            Constraint::Length(2), // Header
             Constraint::Min(1),    // Content
-            Constraint::Length(1), // Controls
+            Constraint::Length(2), // Footer
         ])
         .split(modal_area);
 
+    // Define color styles
+    let category_style = Style::default()
+        .fg(Color::Cyan)
+        .bg(Color::Rgb(25, 25, 35))
+        .add_modifier(Modifier::BOLD);
+    let key_style = Style::default()
+        .fg(Color::Yellow)
+        .bg(Color::Rgb(25, 25, 35))
+        .add_modifier(Modifier::BOLD);
+    let description_style = Style::default().fg(Color::Gray).bg(Color::Rgb(25, 25, 35));
+
     let help_content = vec![
+        // Navigation section
+        Line::from(vec![Span::styled(" NAVIGATION ", category_style)]),
         Line::from(vec![
-            Span::styled(
-                "Navigation: ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::raw(" "),
-            Span::styled(
-                "k/j ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Up/Down)",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
+            Span::raw("   "),
+            Span::styled("k", key_style),
+            Span::styled(" - Move up in list", description_style),
         ]),
         Line::from(vec![
-            Span::styled(
-                "Actions:    ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::raw(" "),
-            Span::styled(
-                "A ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Add Task) ",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "D ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Delete Task)",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
+            Span::raw("   "),
+            Span::styled("j", key_style),
+            Span::styled(" - Move down in list", description_style),
+        ]),
+        Line::from(""),
+        // Task Actions section
+        Line::from(vec![Span::styled(" TASK ACTIONS ", category_style)]),
+        Line::from(vec![
+            Span::raw("   "),
+            Span::styled("A", key_style),
+            Span::styled(" - Add new task", description_style),
         ]),
         Line::from(vec![
-            Span::styled(
-                "Editing:    ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::raw(" "),
-            Span::styled(
-                "T ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Toggle Status)",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
+            Span::raw("   "),
+            Span::styled("D", key_style),
+            Span::styled(" - Delete selected task", description_style),
         ]),
         Line::from(vec![
-            Span::styled(
-                "Input Modal:",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::raw(" "),
-            Span::styled(
-                "Enter ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Save) ",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "Tab ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Switch Field) ",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "Esc ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Cancel)",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
+            Span::raw("   "),
+            Span::styled("T", key_style),
+            Span::styled(" - Toggle task status", description_style),
+        ]),
+        Line::from(""),
+        // Input Modal section
+        Line::from(vec![Span::styled(" INPUT MODAL ", category_style)]),
+        Line::from(vec![
+            Span::raw("   "),
+            Span::styled("Enter", key_style),
+            Span::styled(" - Save task", description_style),
         ]),
         Line::from(vec![
-            Span::styled(
-                "System:     ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::raw(" "),
-            Span::styled(
-                "Q/Esc/? ",
-                Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
-            ),
-            Span::styled(
-                "(Quit/Help)",
-                Style::default()
-                    .fg(Color::DarkGray)
-                    .bg(Color::Rgb(30, 30, 40)),
-            ),
+            Span::raw("   "),
+            Span::styled("Tab", key_style),
+            Span::styled(" - Switch between title/message fields", description_style),
+        ]),
+        Line::from(vec![
+            Span::raw("   "),
+            Span::styled("Esc", key_style),
+            Span::styled(" - Cancel and close modal", description_style),
+        ]),
+        Line::from(""),
+        // System Controls section
+        Line::from(vec![Span::styled(" SYSTEM CONTROLS ", category_style)]),
+        Line::from(vec![
+            Span::raw("   "),
+            Span::styled("Q / Ctrl+C ", key_style),
+            Span::styled(" - Show quit confirmation", description_style),
+        ]),
+        Line::from(vec![
+            Span::raw("   "),
+            Span::styled("?", key_style),
+            Span::styled(" - Show this help menu", description_style),
         ]),
     ];
 
     let help_text = Paragraph::new(help_content)
-        .style(Style::default().bg(Color::Rgb(30, 30, 40)))
+        .style(Style::default().bg(Color::Rgb(25, 25, 35)))
+        .alignment(Alignment::Left)
         .wrap(ratatui::widgets::Wrap { trim: true });
 
     let controls = Paragraph::new(
-        Line::from("ESC (Close Help)".to_string()).alignment(ratatui::layout::Alignment::Center),
+        Line::from(vec![
+            Span::raw(" "),
+            Span::styled(
+                "ESC",
+                Style::default()
+                    .fg(Color::Yellow)
+                    .add_modifier(Modifier::BOLD),
+            ),
+            Span::styled(" to close help", Style::default().fg(Color::Gray)),
+            Span::raw(" "),
+        ])
+        .alignment(Alignment::Center),
     )
-    .style(Style::default().bg(Color::Rgb(30, 30, 40)));
+    .style(Style::default().bg(Color::Rgb(25, 25, 35)));
 
-    frame.render_widget(help_text, content_layout[1]);
+    // Create a narrower centered area within the content area to effectively center the help content while keeping text left-aligned
+    let centered_content_area = components::center_rect(70, 100, content_layout[1]);
+    frame.render_widget(help_text, centered_content_area);
     frame.render_widget(controls, content_layout[2]);
 }

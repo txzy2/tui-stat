@@ -42,7 +42,7 @@ pub fn render_quit_modal(frame: &mut Frame) {
 
     let question = Paragraph::new(vec![Line::from(vec![
         Span::styled(
-            "Вы уверены, что хотите выйти?",
+            "Are you sure?",
             Style::default()
                 .fg(Color::Gray)
                 .add_modifier(Modifier::BOLD),
@@ -57,7 +57,7 @@ pub fn render_quit_modal(frame: &mut Frame) {
     .alignment(Alignment::Center)])
     .style(Style::default().bg(Color::Rgb(30, 30, 40)));
 
-    let controls = Paragraph::new(Line::from("ESC (Отмена)").alignment(Alignment::Center))
+    let controls = Paragraph::new(Line::from("ESC (Cancel)").alignment(Alignment::Center))
         .style(Style::default().bg(Color::Rgb(30, 30, 40)));
 
     frame.render_widget(question, content_area[0]);
