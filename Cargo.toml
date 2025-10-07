@@ -1,7 +1,7 @@
 [package]
-name = "tui-stat"
+name = "tuitask"
 version = "0.2.1"
-description = "An example generated using the simple template"
+description = ""
 authors = ["txzy2 <txzy2@yandex.ru>"]
 license = "MIT"
 edition = "2021"
@@ -23,5 +23,5 @@ tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
 rusqlite = { version = "0.37.0", features = ["bundled"] }
 
 [[bin]]
-name = "tui-todo"
+name = "tuitask"
 path = "src/main.rs"

@@ -1,10 +1,10 @@
-# tui-stat
+# tuitask
 
-`tui-stat` is a beautiful terminal-based application that displays real-time system information, weather data, and a persistent TODO list - all in an elegant TUI (Terminal User Interface).
+`tuitask` is a beautiful terminal-based application that displays real-time system information, weather data, and a persistent TODO list - all in an elegant TUI (Terminal User Interface).
 
 [![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![TUI](https://img.shields.io/badge/TUI-ncurses-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/Text-based_user_interface)
-[![MIT License](https://img.shields.io/github/license/txzy2/tui-stat?style=for-the-badge)](https://github.com/txzy2/tui-stat/blob/main/LICENSE)
+[![MIT License](https://img.shields.io/github/license/txzy2/tuitask?style=for-the-badge)](https://github.com/txzy2/tui-stat/blob/main/LICENSE)
 
 ## ✨ Features
 
@@ -22,13 +22,13 @@
 To install the latest version automatically:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/txzy2/tui-stat/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/txzy2/tuitask/main/install.sh | bash
 ```
 
 Or download and run the install script manually:
 
 ```bash
-curl -LO https://raw.githubusercontent.com/txzy2/tui-stat/main/install.sh
+curl -LO https://raw.githubusercontent.com/txzy2/tuitask/main/install.sh
 chmod +x install.sh
 ./install.sh
 ```
@@ -52,15 +52,15 @@ source ~/.bashrc
 To build from source:
 
 ```bash
-git clone https://github.com/txzy2/tui-stat.git
-cd tui-stat
+git clone https://github.com/txzy2/tuitask.git
+cd tuitask
 cargo build --release
 ./target/release/tui_stat
 ```
 
 ### Pre-built Binaries
 
-You can download pre-built binaries from the [Releases](https://github.com/txzy2/tui-stat/releases) page.
+You can download pre-built binaries from the [Releases](https://github.com/txzy2/tuitask/releases) page.
 Each release includes binaries for Linux, macOS, and Windows.
 
 #### Prerequisites
@@ -87,7 +87,7 @@ WEATHER_API_KEY=your_api_key_here
 Run the application with:
 
 ```bash
-tui-stat
+tuitask
 ```
 
 ### Controls
@@ -127,7 +127,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🐛 Issues & Support
 
-If you encounter any bugs or have feature requests, please [open an issue](https://github.com/txzy2/tui-stat/issues) on GitHub.
+If you encounter any bugs or have feature requests, please [open an issue](https://github.com/txzy2/tuitask/issues) on GitHub.
 
 ## ⭐ Acknowledgments
 
