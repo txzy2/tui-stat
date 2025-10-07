@@ -18,7 +18,9 @@ use tokio::{
 };
 
 use crate::{
-    components, database::DatabaseManager, logger,
+    components,
+    database::DatabaseManager,
+    logger,
     system::{keys_handler, system_info::System},
     types::{GeoData, ListState, SystemData, WeatherInfo, WeatherResponse},
 };
@@ -83,7 +85,9 @@ impl App {
             Err(e) => {
                 eprintln!("Error initializing database: {}", e);
                 // Create a new database manager even if initialization failed
-                DatabaseManager::new().unwrap_or_else(|_| DatabaseManager::new().expect("DatabaseManager should be created"))
+                DatabaseManager::new().unwrap_or_else(|_| {
+                    DatabaseManager::new().expect("DatabaseManager should be created")
+                })
             }
         };
 
@@ -148,7 +152,10 @@ impl App {
     }
 
     pub fn load_todos_from_db(&mut self) -> Result<(), Box<dyn std::error::Error>> {
-        let items = self.database.load_todos().map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?;
+        let items = self
+            .database
+            .load_todos()
+            .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?;
 
         // Update the list state with loaded items
         self.list_state.items = items;
@@ -159,7 +166,7 @@ impl App {
         } else {
             self.list_state.selected = None;
         }
-        
+
         Ok(())
     }
 
@@ -169,8 +176,9 @@ impl App {
         message: &str,
         status: crate::types::Status,
     ) -> Result<i64, Box<dyn std::error::Error>> {
-        Ok(self.database.add_todo(title, message, status)
-            .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?)
+        self.database
+            .add_todo(title, message, status)
+            .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
     }
 
     pub fn update_todo_status_in_db(
@@ -178,13 +186,15 @@ impl App {
         id: i64,
         status: crate::types::Status,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        Ok(self.database.update_todo_status(id, status)
-            .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?)
+        self.database
+            .update_todo_status(id, status)
+            .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
     }
 
     pub fn delete_todo_from_db(&self, id: i64) -> Result<(), Box<dyn std::error::Error>> {
-        Ok(self.database.delete_todo(id)
-            .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?)
+        self.database
+            .delete_todo(id)
+            .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
     }
 
     fn spawn_initial_fetch(&self) {

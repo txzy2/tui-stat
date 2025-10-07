@@ -9,7 +9,7 @@ use ratatui::{
 use crate::components;
 
 pub fn render_quit_modal(frame: &mut Frame) {
-    let modal_area = components::center_rect(30, 12, frame.area());
+    let modal_area = components::center_rect(30, 15, frame.area());
 
     frame.render_widget(Clear, modal_area);
 

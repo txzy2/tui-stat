@@ -1,8 +1,8 @@
 use ratatui::{
     layout::{Constraint, Direction, Layout},
-    style::{Color, Style},
+    style::{Color, Modifier, Style},
     text::{Line, Span},
-    widgets::{Block, BorderType, Borders, Clear, Paragraph},
+    widgets::{Block, BorderType, Borders, Clear, Paragraph, Wrap},
     Frame,
 };
 
@@ -13,76 +13,213 @@ pub fn render_input_modal(frame: &mut Frame, app: &App) {
     let modal_area = center_rect(50, 30, frame.area());
     frame.render_widget(Clear, modal_area);
 
-    let block = Block::default()
+    let modal_block = Block::default()
         .borders(Borders::ALL)
-        .border_style(Style::default().fg(Color::Gray))
-        .border_type(BorderType::Rounded)
-        .title("Add New TODO");
+        .border_style(Style::default().fg(Color::DarkGray))
+        .border_type(BorderType::Double)
+        .style(Style::default().bg(Color::Rgb(25, 25, 35)))
+        .title(Line::from(vec![
+            Span::styled(
+                " ADD NEW TODO ",
+                Style::default()
+                    .fg(Color::Cyan)
+                    .bg(Color::Rgb(25, 25, 35))
+                    .add_modifier(Modifier::BOLD),
+            ),
+            Span::raw(" "),
+        ]));
 
-    let vertical_layout = Layout::default()
+    frame.render_widget(modal_block, modal_area);
+
+    let content_layout = Layout::default()
         .direction(Direction::Vertical)
+        .horizontal_margin(2)
+        .vertical_margin(1)
         .constraints([
-            Constraint::Length(1), // Title
+            Constraint::Length(1), // Header separator
+            Constraint::Length(1), // Field label
             Constraint::Length(3), // Title input
-            Constraint::Length(3), // Message input
-            Constraint::Length(1), // Instructions
-            Constraint::Fill(1),   // Empty space
+            Constraint::Length(1), // Field label
+            Constraint::Length(5), // Message input (increased height)
+            Constraint::Length(2), // Instructions
+            Constraint::Min(1),    // Empty space
         ])
         .split(modal_area);
 
-    let title_border_style = if app.input_current_field == InputField::Title {
-        Style::default().fg(Color::White) // Active field
-    } else {
-        Style::default().fg(Color::DarkGray) // Inactive field
-    };
+    // Define color styles
+    let active_field_style = Style::default()
+        .fg(Color::LightBlue)
+        .add_modifier(Modifier::BOLD);
+    let inactive_field_style = Style::default().fg(Color::DarkGray);
+    let label_style = Style::default()
+        .fg(Color::Cyan)
+        .add_modifier(Modifier::BOLD)
+        .bg(Color::Rgb(25, 25, 35));
 
-    let message_border_style = if app.input_current_field == InputField::Message {
-        Style::default().fg(Color::White) // Active field
+    // Title label
+    let title_label = Paragraph::new(Line::from(vec![
+        Span::styled("TITLE", label_style),
+        Span::raw(" ".repeat(45)),
+    ]))
+    .style(Style::default().bg(Color::Rgb(25, 25, 35)));
+    frame.render_widget(title_label, content_layout[1]);
+
+    // Title input field
+    let title_border_style = if app.input_current_field == InputField::Title {
+        active_field_style
     } else {
-        Style::default().fg(Color::DarkGray) // Inactive field
+        inactive_field_style
     };
 
     let title_input_block = Block::default()
         .borders(Borders::ALL)
         .border_style(title_border_style)
-        .title("Title");
+        .style(Style::default().bg(Color::Rgb(30, 30, 40)));
 
     let title_text = if app.input_title.is_empty() {
-        Span::raw("Enter title...")
+        Span::styled(
+            "Enter title... (max 50 chars)",
+            Style::default()
+                .fg(Color::DarkGray)
+                .bg(Color::Rgb(30, 30, 40)),
+        )
     } else {
-        Span::raw(&app.input_title)
+        Span::styled(
+            &app.input_title,
+            Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
+        )
     };
 
     let title_paragraph = Paragraph::new(title_text)
         .block(title_input_block)
-        .style(Style::default().fg(Color::White));
+        .style(Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)));
 
-    frame.render_widget(title_paragraph, vertical_layout[1]);
+    frame.render_widget(title_paragraph, content_layout[2]);
+
+    // Message label
+    let message_label = Paragraph::new(Line::from(vec![
+        Span::styled("MESSAGE", label_style),
+        Span::raw(" ".repeat(43)),
+    ]))
+    .style(Style::default().bg(Color::Rgb(25, 25, 35)));
+    frame.render_widget(message_label, content_layout[3]);
+
+    // Message input field
+    let message_border_style = if app.input_current_field == InputField::Message {
+        active_field_style
+    } else {
+        inactive_field_style
+    };
 
     let message_input_block = Block::default()
         .borders(Borders::ALL)
         .border_style(message_border_style)
-        .title("Message");
+        .style(Style::default().bg(Color::Rgb(30, 30, 40)));
 
     let message_text = if app.input_message.is_empty() {
-        Span::raw("Enter description...")
+        Span::styled(
+            "Enter description... (max 200 chars)",
+            Style::default()
+                .fg(Color::DarkGray)
+                .bg(Color::Rgb(30, 30, 40)),
+        )
     } else {
-        Span::raw(&app.input_message)
+        Span::styled(
+            &app.input_message,
+            Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)),
+        )
     };
 
     let message_paragraph = Paragraph::new(message_text)
         .block(message_input_block)
-        .style(Style::default().fg(Color::White));
+        .style(Style::default().fg(Color::White).bg(Color::Rgb(30, 30, 40)))
+        .wrap(Wrap { trim: true });
 
-    frame.render_widget(message_paragraph, vertical_layout[2]);
+    frame.render_widget(message_paragraph, content_layout[4]);
 
-    let instructions = Line::from(vec![Span::raw(
-        "  Enter - save, Tab - switch field, Esc - cancel",
-    )]);
+    if app.input_current_field == InputField::Title {
+        let start_x = content_layout[2].x + 1;
+        let cursor_x = if app.input_title.is_empty() {
+            start_x
+        } else {
+            let cursor_pos = std::cmp::min(app.input_cursor_pos, app.input_title.len());
+            if cursor_pos > 0 {
+                let visible_text = &app.input_title[..cursor_pos];
+                start_x + visible_text.chars().count() as u16
+            } else {
+                start_x
+            }
+        };
+        let cursor_y = content_layout[2].y + 1;
+        frame.set_cursor_position((cursor_x, cursor_y));
+    }
 
-    let instructions_paragraph =
-        Paragraph::new(instructions).style(Style::default().fg(Color::DarkGray));
+    if app.input_current_field == InputField::Message {
+        let start_x = content_layout[4].x + 1;
+        let cursor_x = if app.input_message.is_empty() {
+            start_x
+        } else {
+            let cursor_pos = std::cmp::min(app.input_cursor_pos, app.input_message.len());
+            if cursor_pos > 0 {
+                let visible_text = &app.input_message[..cursor_pos];
+                start_x + visible_text.chars().count() as u16
+            } else {
+                start_x
+            }
+        };
+        let cursor_y = content_layout[4].y + 1;
+        frame.set_cursor_position((cursor_x, cursor_y));
+    }
 
-    frame.render_widget(instructions_paragraph, vertical_layout[3]);
-    frame.render_widget(block, modal_area);
+    let instructions = Line::from(vec![
+        Span::styled(
+            " │ ",
+            Style::default()
+                .fg(Color::DarkGray)
+                .bg(Color::Rgb(25, 25, 35)),
+        ),
+        Span::styled(
+            " ENTER ",
+            Style::default()
+                .fg(Color::Yellow)
+                .add_modifier(Modifier::BOLD),
+        ),
+        Span::styled(" Save ", Style::default().fg(Color::Gray)),
+        Span::styled(
+            " │ ",
+            Style::default()
+                .fg(Color::DarkGray)
+                .bg(Color::Rgb(25, 25, 35)),
+        ),
+        Span::styled(
+            " TAB ",
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        ),
+        Span::styled(" Switch ", Style::default().fg(Color::Gray)),
+        Span::styled(
+            " │ ",
+            Style::default()
+                .fg(Color::DarkGray)
+                .bg(Color::Rgb(25, 25, 35)),
+        ),
+        Span::styled(
+            " ESC ",
+            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+        ),
+        Span::styled(" Cancel ", Style::default().fg(Color::Gray)),
+        Span::styled(
+            "│ ",
+            Style::default()
+                .fg(Color::DarkGray)
+                .bg(Color::Rgb(25, 25, 35)),
+        ),
+    ]);
+
+    let instructions_paragraph = Paragraph::new(instructions)
+        .style(Style::default().bg(Color::Rgb(25, 25, 35)))
+        .alignment(ratatui::layout::Alignment::Center);
+
+    frame.render_widget(instructions_paragraph, content_layout[5]);
 }

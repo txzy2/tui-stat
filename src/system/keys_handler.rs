@@ -51,8 +51,16 @@ impl KeyHandler {
                 KeyCode::Tab => {
                     // Switch between input fields
                     app.input_current_field = match app.input_current_field {
-                        crate::app::InputField::Title => crate::app::InputField::Message,
-                        crate::app::InputField::Message => crate::app::InputField::Title,
+                        crate::app::InputField::Title => {
+                            // Update cursor position for the new field
+                            app.input_cursor_pos = app.input_message.len();
+                            crate::app::InputField::Message
+                        }
+                        crate::app::InputField::Message => {
+                            // Update cursor position for the new field
+                            app.input_cursor_pos = app.input_title.len();
+                            crate::app::InputField::Title
+                        }
                     };
                 }
                 KeyCode::Backspace => {
@@ -61,32 +69,33 @@ impl KeyHandler {
                         crate::app::InputField::Title => {
                             if !app.input_title.is_empty() {
                                 app.input_title.pop();
+                                // Update cursor position
+                                app.input_cursor_pos = app.input_title.len();
                             }
                         }
                         crate::app::InputField::Message => {
                             if !app.input_message.is_empty() {
                                 app.input_message.pop();
+                                // Update cursor position
+                                app.input_cursor_pos = app.input_message.len();
                             }
                         }
                     }
                 }
-                KeyCode::Char(c) => {
-                    // Add character to the current input field
-                    match app.input_current_field {
-                        crate::app::InputField::Title => {
-                            if app.input_title.len() < 50 {
-                                // Limit title length
-                                app.input_title.push(c);
-                            }
-                        }
-                        crate::app::InputField::Message => {
-                            if app.input_message.len() < 200 {
-                                // Limit message length
-                                app.input_message.push(c);
-                            }
+                KeyCode::Char(c) => match app.input_current_field {
+                    crate::app::InputField::Title => {
+                        if app.input_title.len() < 50 {
+                            app.input_title.push(c);
+                            app.input_cursor_pos = app.input_title.len();
                         }
                     }
-                }
+                    crate::app::InputField::Message => {
+                        if app.input_message.len() < 200 {
+                            app.input_message.push(c);
+                            app.input_cursor_pos = app.input_message.len();
+                        }
+                    }
+                },
                 _ => {}
             }
         } else if app.show_quit_modal {
@@ -126,8 +135,11 @@ impl KeyHandler {
                             crate::types::Status::Cancelled => crate::types::Status::Todo,
                         };
 
-                        if let Err(e) = app.update_todo_status_in_db(app.list_state.items[i].id, new_status) {
-                            let _ = logger::error(format!("Error updating TODO status in DB: {}", e));
+                        if let Err(e) =
+                            app.update_todo_status_in_db(app.list_state.items[i].id, new_status)
+                        {
+                            let _ =
+                                logger::error(format!("Error updating TODO status in DB: {}", e));
                         } else if let Err(e) = app.load_todos_from_db() {
                             let _ = logger::error(format!(
                                 "Error loading todos from DB after status update: {}",

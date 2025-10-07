@@ -1,6 +1,5 @@
-
-use rusqlite::{Connection, Result as RusqliteResult};
 use crate::types::{Status, TODOData};
+use rusqlite::{Connection, Result as RusqliteResult};
 use std::error::Error;
 use std::fmt;
 
@@ -42,12 +41,18 @@ impl DatabaseManager {
                     )",
                     [],
                 ) {
-                    return Err(DatabaseError::ConnectionError(format!("Error creating table: {}", e)));
+                    return Err(DatabaseError::ConnectionError(format!(
+                        "Error creating table: {}",
+                        e
+                    )));
                 }
                 Some(conn)
             }
             Err(e) => {
-                return Err(DatabaseError::ConnectionError(format!("Error opening database: {}", e)));
+                return Err(DatabaseError::ConnectionError(format!(
+                    "Error opening database: {}",
+                    e
+                )));
             }
         };
 
@@ -72,41 +77,47 @@ impl DatabaseManager {
                 ",
             ).map_err(|e| DatabaseError::QueryError(e.to_string()))?;
 
-            let todo_iter = stmt.query_map([], |row| {
-                let id: i64 = row.get(0)?;
-                let title: String = row.get(1)?;
-                let message: String = row.get(2)?;
-                let status_str: String = row.get(3)?;
-                let date_str: String = row.get(4)?;
+            let todo_iter = stmt
+                .query_map([], |row| {
+                    let id: i64 = row.get(0)?;
+                    let title: String = row.get(1)?;
+                    let message: String = row.get(2)?;
+                    let status_str: String = row.get(3)?;
+                    let date_str: String = row.get(4)?;
 
-                let status = match status_str.as_str() {
-                    "Todo" => Status::Todo,
-                    "Active" => Status::Active,
-                    "Done" => Status::Done,
-                    "Cancelled" => Status::Cancelled,
-                    _ => Status::Todo, // default
-                };
+                    let status = match status_str.as_str() {
+                        "Todo" => Status::Todo,
+                        "Active" => Status::Active,
+                        "Done" => Status::Done,
+                        "Cancelled" => Status::Cancelled,
+                        _ => Status::Todo, // default
+                    };
 
-                let date = chrono::DateTime::parse_from_rfc3339(&date_str)
-                    .unwrap_or_else(|_| chrono::Local::now().into())
-                    .with_timezone(&chrono::Local);
+                    let date = chrono::DateTime::parse_from_rfc3339(&date_str)
+                        .unwrap_or_else(|_| chrono::Local::now().into())
+                        .with_timezone(&chrono::Local);
 
-                // Convert String to &'static str by leaking the memory (not ideal but needed for the current struct design)
-                Ok(TODOData {
-                    id,
-                    title: Box::leak(title.into_boxed_str()),
-                    message: Box::leak(message.into_boxed_str()),
-                    status,
-                    date,
+                    // Convert String to &'static str by leaking the memory (not ideal but needed for the current struct design)
+                    Ok(TODOData {
+                        id,
+                        title: Box::leak(title.into_boxed_str()),
+                        message: Box::leak(message.into_boxed_str()),
+                        status,
+                        date,
+                    })
                 })
-            }).map_err(|e| {
-                // Convert rusqlite error to DatabaseError
-                match e {
-                    rusqlite::Error::InvalidQuery => DatabaseError::QueryError("Invalid query".to_string()),
-                    rusqlite::Error::InvalidParameterName(_) => DatabaseError::QueryError("Invalid parameter name".to_string()),
-                    _ => DatabaseError::QueryError(e.to_string()),
-                }
-            })?;
+                .map_err(|e| {
+                    // Convert rusqlite error to DatabaseError
+                    match e {
+                        rusqlite::Error::InvalidQuery => {
+                            DatabaseError::QueryError("Invalid query".to_string())
+                        }
+                        rusqlite::Error::InvalidParameterName(_) => {
+                            DatabaseError::QueryError("Invalid parameter name".to_string())
+                        }
+                        _ => DatabaseError::QueryError(e.to_string()),
+                    }
+                })?;
 
             let mut items = Vec::new();
             for todo in todo_iter {
@@ -115,8 +126,12 @@ impl DatabaseManager {
                     Err(e) => {
                         // Convert rusqlite error to DatabaseError
                         return Err(match e {
-                            rusqlite::Error::InvalidQuery => DatabaseError::QueryError("Invalid query".to_string()),
-                            rusqlite::Error::InvalidParameterName(_) => DatabaseError::QueryError("Invalid parameter name".to_string()),
+                            rusqlite::Error::InvalidQuery => {
+                                DatabaseError::QueryError("Invalid query".to_string())
+                            }
+                            rusqlite::Error::InvalidParameterName(_) => {
+                                DatabaseError::QueryError("Invalid parameter name".to_string())
+                            }
                             _ => DatabaseError::QueryError(e.to_string()),
                         });
                     }
@@ -125,7 +140,9 @@ impl DatabaseManager {
 
             Ok(items)
         } else {
-            Err(DatabaseError::ConnectionError("Database connection not available".to_string()))
+            Err(DatabaseError::ConnectionError(
+                "Database connection not available".to_string(),
+            ))
         }
     }
 
@@ -148,19 +165,18 @@ impl DatabaseManager {
             conn.execute(
                 "INSERT INTO todos (title, message, status, date) VALUES (?1, ?2, ?3, ?4)",
                 [title, message, status_str, &date_str],
-            ).map_err(|e| DatabaseError::UpdateError(e.to_string()))?;
+            )
+            .map_err(|e| DatabaseError::UpdateError(e.to_string()))?;
 
             Ok(conn.last_insert_rowid())
         } else {
-            Err(DatabaseError::ConnectionError("Database connection not available".to_string()))
+            Err(DatabaseError::ConnectionError(
+                "Database connection not available".to_string(),
+            ))
         }
     }
 
-    pub fn update_todo_status(
-        &self,
-        id: i64,
-        status: Status,
-    ) -> Result<(), DatabaseError> {
+    pub fn update_todo_status(&self, id: i64, status: Status) -> Result<(), DatabaseError> {
         if let Some(conn) = &self.connection {
             let status_str = match status {
                 Status::Todo => "Todo",
@@ -172,11 +188,14 @@ impl DatabaseManager {
             conn.execute(
                 "UPDATE todos SET status = ?1 WHERE id = ?2",
                 [status_str, &id.to_string()],
-            ).map_err(|e| DatabaseError::UpdateError(e.to_string()))?;
+            )
+            .map_err(|e| DatabaseError::UpdateError(e.to_string()))?;
 
             Ok(())
         } else {
-            Err(DatabaseError::ConnectionError("Database connection not available".to_string()))
+            Err(DatabaseError::ConnectionError(
+                "Database connection not available".to_string(),
+            ))
         }
     }
 
@@ -186,7 +205,10 @@ impl DatabaseManager {
                 .map_err(|e| DatabaseError::UpdateError(e.to_string()))?;
             Ok(())
         } else {
-            Err(DatabaseError::ConnectionError("Database connection not available".to_string()))
+            Err(DatabaseError::ConnectionError(
+                "Database connection not available".to_string(),
+            ))
         }
     }
 }
+
