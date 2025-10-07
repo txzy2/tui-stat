@@ -50,10 +50,10 @@ jobs:
           target: ${{ matrix.target }}
           # (optional) Name of the executable to be uploaded.
           # [default value: package name defined in Cargo.toml]
-          bin: tui-stat
+          bin: tuitask
           # (optional) Archive name (without extension) that will be created.
           # [default value: $bin-$target]
-          archive: tui-stat-${{ matrix.target }}
+          archive: tuitask-${{ matrix.target }}
           # (optional) Whether to compress the binary or not.
           # By default, binaries for Windows are not compressed and all others are compressed.
           # Compressed binaries need to be extracted before usage.
